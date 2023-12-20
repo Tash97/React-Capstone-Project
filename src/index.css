@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    @variants responsive {
+      .no-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+
+      .no-scrollbar {
+          -ms-overflow-style: none; 
+          scrollbar-width: none;  
+      }
+    }
+  }
+
+  @font-face {
+    font-family: "pokemon";  
+    src: url(".\fonts\PokemonClassic.ttf") format("truetype");
+  }
+
+  @keyframes openLeft {
+    
+    100% {transform:translateX(5%) scale(0 ,1);}
+  }
+  @keyframes openRight {
+    
+    100% {transform:translateX(95%) scale(0 ,1);}
+  }
+
+
+ 
