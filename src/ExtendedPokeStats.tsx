@@ -529,8 +529,8 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                             </div> 
                             <div className='col-span-12 row-span-1 border-2 border-blue-600'></div>
                             <div className='grid grid-rows-2 col-span-16 row-span-2 border-2 border-blue-600 rounded-b-xl'>
-                                <div className="font-semibold leading-none">Minimum stats are calculated with 0 EVs, IVs of 0, and (if applicable) a hindering nature.</div>
-                                <div className="font-semibold leading-none">Maximum stats are calculated with 252 EVs, IVs of 31, and (if applicable) a helpful nature.</div>
+                                <div className="font-semibold leading-none">Minimum stats are calculated with 0 EVs, IVs of 0, and a hindering nature.</div>
+                                <div className="font-semibold leading-none">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
                             </div>
                     </div>
                     <div className='grid grid-cols-1 grid-rows-14 w-1/4 h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
@@ -573,14 +573,14 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
             <div ref={typeEffectivenessBox} className='hidden'>
                 <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Weaknesses</div>
-                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl'>
+                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
                         
                         <WeaknessMap weaknesses={weaknesses} />
                     </div>
                 </div>
                 <div className=' grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Resistances</div>
-                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl'>
+                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
                         <ResistanceMap resistances={resistances} />
                     </div>
                 </div>
