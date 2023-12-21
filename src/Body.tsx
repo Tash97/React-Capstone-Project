@@ -1,22 +1,16 @@
 import {useState, useRef} from "react";
-
-
 import Pokedex from "./Pokedex"
 import ExtendedPokeStats from "./ExtendedPokeStats";
-
 
 interface AbilityDetails{
   name: string
   url: string
 }
-
 interface Ability{
   ability: AbilityDetails
   is_hidden: boolean
   slot: number
 }
-
-
 
 function Body() {
     {/* searchbar variables */}
@@ -139,10 +133,10 @@ function Body() {
         {/* sets data for extended stats: variation and evolutions tab */}
         let baseEvolutionVar: string = ''
         let baseEvolutionPicVar: string = ''
-        let secondEvolutionVar: Array<string> = []
-        let secondEvolutionPicVar: Array<string> = []
-        let thirdEvolutionVar: Array<string> = []
-        let thirdEvolutionPicVar: Array<string> = []            
+        const secondEvolutionVar: Array<string> = []
+        const secondEvolutionPicVar: Array<string> = []
+        const thirdEvolutionVar: Array<string> = []
+        const thirdEvolutionPicVar: Array<string> = []            
         const evolutionResponse = await fetch(pokeData2.evolution_chain.url);
         const evolutionData = await evolutionResponse.json();
         baseEvolutionVar = evolutionData.chain.species.name
@@ -253,10 +247,10 @@ function Body() {
       {/* sets data for extended stats: variation and evolutions tab */}
       let baseEvolutionVar: string = ''
       let baseEvolutionPicVar: string = ''
-      let secondEvolutionVar: Array<string> = []
-      let secondEvolutionPicVar: Array<string> = []
-      let thirdEvolutionVar: Array<string> = []
-      let thirdEvolutionPicVar: Array<string> = []            
+      const secondEvolutionVar: Array<string> = []
+      const secondEvolutionPicVar: Array<string> = []
+      const thirdEvolutionVar: Array<string> = []
+      const thirdEvolutionPicVar: Array<string> = []            
       const evolutionResponse = await fetch(pokeData2.evolution_chain.url);
       const evolutionData = await evolutionResponse.json();
       baseEvolutionVar = evolutionData.chain.species.name

@@ -18,6 +18,7 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
     {/* function to initiate pokedex open animation */}
     useEffect(()=>{
         if(rightPanel.current && leftPanel.current && pokeInformation[0] !== undefined){
+            window.scrollTo(0, window.scrollY + 100)
             rightPanel.current.style.animation = 'openRight 1.5s ease-in-out 1'
             leftPanel.current.style.animation = 'openLeft 1.5s ease-in-out 1'
             const timerHideLeft = () => {
@@ -81,7 +82,7 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
             pokeInfo.current.className = 'flex flex-col justify-between text-lg h-[30%] mb-5'
         }
     } 
-    }, [pokeInformation])
+    }, [pokeInformation, pokeeName, pokeeType2])
 
     {/* functions for disabling normal scroll and setting click scroll on pokedex entry */}
     const overflow = useRef<HTMLDivElement>(null)
@@ -105,7 +106,9 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
     }
     useEffect(()=>{
         if(overflow.current && up.current && down.current){
-                scroller('up')
+            overflow.current.scrollTop = 0
+            up.current.className = 'hidden'
+            down.current.className = 'mt-auto animate-bounce'
         }
     },[pokeeName])
     if(overflow.current){

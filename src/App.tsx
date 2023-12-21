@@ -2,8 +2,6 @@ import Navbar from "./Navbar"
 import Body from "./Body"
 import './fonts/PokemonClassic.ttf'
 
-
-
 function App() {
 
   return (

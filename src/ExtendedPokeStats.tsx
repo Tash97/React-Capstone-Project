@@ -96,7 +96,7 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                 oneEvolution.current.className = 'flex flex-col justify-around w-full h-full'
             }
         }
-    },[baseEvolution])
+    },[baseEvolution, secondEvolutions.length, thirdEvolutions.length])
     
     {/* variables for extended stats tab displays */}
     const statsAndAbilitiesBox = useRef<HTMLDivElement>(null)
