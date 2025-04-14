@@ -27,6 +27,14 @@ interface Stats{
     abilityDetails: string
   }
 
+  interface Moves{
+    name: string
+    pp: number
+    power: number
+    type: string
+    elementType: string
+  }
+
 interface Types {
     type1: string
     type2: string
@@ -35,7 +43,7 @@ interface Types {
 interface ExtendedPokeInfo{
     stats: Stats 
     abilities: Array<Ability> 
-    moves: Array<string> 
+    moves: Array<Moves> 
     types: Types
     baseEvolution: string
     baseEvolutionPic: string
@@ -51,6 +59,7 @@ function Body() {
     {/* searchbar variables */}
     const [allPokeNamesState, setAllPokeNamesState] = useState<Array<string>>([])
     const allPokeNames = useRef<Array<string>>([]);
+    const [searchLoading, setSearchLoading] = useState<boolean>(false)
     const [pokeInfo, setPokeInfo] = useState<PokeInfo>({name: "", weight: "", height: "", type1: "", type2: "", photo: "", entry: ""})
     const [extendedPokeInfo, setExtendedPokeInfo] = useState<ExtendedPokeInfo>({
         stats: {
@@ -80,7 +89,6 @@ function Body() {
         shinyPictures: ''
     })
 
-console.log("hi from body component");
 
 
     {/* search functions variables */}
@@ -92,11 +100,11 @@ console.log("hi from body component");
     const refToGlidePokedexHolder = useRef<HTMLDivElement>(null)
 
     {/* searches for pokemon via input */}
-    const search = async(input: string, suggestion: string = "NA") => {  
+    const search = async(input: string, suggestion: string = "NA", rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null) => {  
         {/* grabs data for pokedex and extended stats: stats & abilities, moves, and type effectiveness */}
         let search: string = ''
 
-
+        setSearchLoading(true)
 
         if(allPokeNames.current.includes(input)){
 
@@ -126,11 +134,26 @@ console.log("hi from body component");
             pokeType2 = pokeData.types[1].type.name
         }
 
+
+        const letterGrab1 = pokeData.name.charAt(0)
+        const restOfName1 = pokeData.name.slice(1)
+        const letterCap1 = letterGrab1.toUpperCase()
+        const letterGrab2 = pokeData.types[0].type.name.charAt(0)
+        const restOfName2 = pokeData.types[0].type.name.slice(1)
+        const letterCap2 = letterGrab2.toUpperCase()
+        const letterGrab3 = pokeType2.charAt(0)
+        const restOfName3 = pokeType2.slice(1)
+        const letterCap = letterGrab3.toUpperCase()
+    
+        const pokeName = letterCap1 + restOfName1
+        const pokeType1 = letterCap2 + restOfName2
+        pokeType2 = letterCap + restOfName3
+
         const pokeInfoSub: PokeInfo = {
-            name: pokeData.name,
+            name: pokeName,
             weight: Math.floor(pokeData.weight / 4.536) + ' lbs',
             height: Math.floor((pokeData.height / .254) / 12) + "'" + Math.ceil(pokeData.height / .254) % 12 + '"',
-            type1: pokeData.types[0].type.name,
+            type1: pokeType1,
             type2: pokeType2,
             photo: pokeData.sprites.front_default,
             entry: pokeEntry
@@ -176,11 +199,21 @@ console.log("hi from body component");
         }  
 
 
-        const movesArray: Array<string> = []
+        const movesArray: Array<Moves> = []
         
         for(let i = 0; i < pokeData.moves.length; i++){
-            movesArray.push(pokeData.moves[i].move.name)
+            const movesResponse = await fetch(pokeData.moves[i].move.url);
+            const movesData = await movesResponse.json();
+            movesArray.push({
+                name: movesData.name,
+                pp: movesData.pp,
+                power: movesData.power,
+                type: movesData.damage_class.name,
+                elementType: movesData.type.name
+            })
         }
+
+
 
         const typesSub: Types = {
             type1: pokeData.types[0].type.name,
@@ -239,31 +272,59 @@ console.log("hi from body component");
 
 
 
-        {/* apply animation  on initial search */}
+
+
+        setSearchLoading(false)
+
+        animation(rPanel, lPanel, pHolder);
+
+    }
+
+    const animation = (rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null) => {
+
         const rearrange = () => {
-          if(extendedStats.current && refToGlidePokedex.current){
-              refToGlidePokedex.current.className = 'flex h-screen transition-transform duration-500 translate-x-[-100%]'
-              const timer = () => {
-                  if(extendedStats.current && refToGlidePokedex.current){
-                      refToGlidePokedex.current.className = 'flex h-screen'
-                      extendedStats.current.className = 'invisible flex justify-start items-center w-[62.75%] h-full'
-                  }
-              }
-              const timer2 = () => {
-                  if(extendedStats.current && refToGlidePokedexHolder.current){
-                      extendedStats.current.className = 'flex justify-start items-center w-[62.75%] h-full animate-fader'
-                  }
-              }
-              setTimeout(timer, 500)
-              setTimeout(timer2, 1000)
-          }
-        }
-        if(extendedStats.current){
-            if(extendedStats.current.className === 'hidden'){
-                setTimeout(rearrange, 1000)
+            if(extendedStats.current && refToGlidePokedex.current){
+                refToGlidePokedex.current.className = 'flex h-screen transition-transform duration-500 translate-x-[-95%]'
+                const timer = () => {
+                    if(extendedStats.current && refToGlidePokedex.current){
+                        refToGlidePokedex.current.className = 'flex h-screen'
+                        extendedStats.current.className = 'invisible flex justify-start items-center w-[62.75%] h-full'
+                    }
+                }
+                const timer2 = () => {
+                    if(extendedStats.current && refToGlidePokedexHolder.current){
+                        extendedStats.current.className = 'flex justify-start items-center w-[62.75%] h-full animate-fader bg-red-500'
+                    }
+                }
+                setTimeout(timer, 500)
+                setTimeout(timer2, 600)
             }
+          }
+
+
+
+
+        if(rPanel && lPanel){
+            window.scrollTo(0, window.scrollY + 100)
+            rPanel.style.transition = 'transform 1s'
+            lPanel.style.transition = 'transform 1s'
+            rPanel.style.transform = 'translateX(95%) scale(0 , 1)'
+
+            lPanel.style.transform = 'translateX(5%) scale(0 , 1)'
+            const timerHideLeft = () => {
+                if(pHolder){
+                    pHolder.style.visibility = 'hidden'
+                    rearrange();
+                }
+            }
+            setTimeout(timerHideLeft, 990)
+
         }
 
+
+        {/* apply animation  on initial search */}
+
+  
     }
 
 
@@ -272,7 +333,7 @@ console.log("hi from body component");
         const grabAllPokeNames = async() => {
             const namesArray: Array<string> = [];
 
-            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=151/`);
+            const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=750/`);
             const data = await response.json();
 
             for(let i = 0; i < data.results.length; i++){
@@ -293,15 +354,16 @@ console.log("hi from body component");
     return (
         <div>
             <div ref={refToGlidePokedexHolder} className="flex justify-around w-full h-screen">
-                <div ref={refToGlidePokedex}  className="flex h-screen">
-                  <Pokedex pokeInformation={pokeInfo} search={search} pokeNames={allPokeNamesState} />
+                <div ref={refToGlidePokedex}  className="flex h-screen bg-green-500">
+                  <Pokedex pokeInformation={pokeInfo} search={search} pokeNames={allPokeNamesState} loadingBool={searchLoading} />
                 </div>
                 <div ref={extendedStats} className="hidden">
 
-                {extendedPokeInfo.name !== "" ? (
-
-                        <ExtendedPokeStats extendedPokeInfo={extendedPokeInfo} />
+                {extendedPokeInfo.name !== '' ? (
+                        <ExtendedPokeStats extendedPokeInfo={extendedPokeInfo} loadingBool={searchLoading} />
                 ) : <></>}
+                   
+        
                 </div>
 
             </div>

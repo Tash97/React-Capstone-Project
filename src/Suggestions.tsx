@@ -1,12 +1,18 @@
 import { useRef, useEffect, useState} from "react";
 
 interface Props {
-    search: (name: string, suggestion: string) => void
+    search: (name: string, suggestion: string, rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null) => void
     pokeNames: Array<string>
+    rPanel: SVGPathElement | null
+    lPanel: SVGPathElement | null
+    pHolder: SVGSVGElement | null
 }
 
 
-const Suggestions = ({search, pokeNames}: Props) => {
+const Suggestions = (props: Props) => {
+    const {search, pokeNames, rPanel, lPanel, pHolder} = props
+
+
     const pokedexInput3 = useRef<HTMLInputElement>(null)
 
     const suggestionsStateRef = useRef<Array<Array<string>>>([])
@@ -14,7 +20,6 @@ const Suggestions = ({search, pokeNames}: Props) => {
     const [suggestionsState, setSuggestionsState] = useState<Array<Array<string>>>([])
 
 
-    console.log("hi from the suggestion component");
     
 
     const searchBar = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +69,7 @@ const Suggestions = ({search, pokeNames}: Props) => {
                 const handleKeyPress = (event: KeyboardEvent) => {
                     if (event.key === "Enter" && pokedexInput3.current) {
                         setSuggestionsState([])
-                        search(pokedexInput3.current.value, suggestionsStateRef.current[0][0]);
+                        search(pokedexInput3.current.value, suggestionsStateRef.current[0][0], rPanel, lPanel, pHolder);
                         pokedexInput3.current.value = ''
         
                     }
@@ -82,7 +87,7 @@ const Suggestions = ({search, pokeNames}: Props) => {
                 }
             }
             
-            }, [search])
+            }, [search, lPanel, pHolder, rPanel])
 
     
     
@@ -112,14 +117,14 @@ const Suggestions = ({search, pokeNames}: Props) => {
                     {suggestionsState.map((suggestion, index) => {
                         if(index === 4){
                             return(
-                                <div key={index} onClick={()=>{search(suggestion[0], 'NA')}} className="flex items-center justify-start w-full h-20"> 
+                                <div key={index} onClick={()=>{search(suggestion[0], 'NA', rPanel, lPanel, pHolder)}} className="flex items-center justify-start w-full h-20"> 
                                     <div className="h-full w-1/3 bg-cover" style={{backgroundImage: `url(${suggestion[1]})`}} ></div>
                                     <div className="ms-auto mr-auto">{suggestion[0]}</div>
                                 </div>
                             )
                         } 
                         return(
-                            <div key={index} onClick={()=>{search(suggestion[0], 'NA')}} className="flex items-center justify-start w-full h-20 border-black border-b-2"> 
+                            <div key={index} onClick={()=>{search(suggestion[0], 'NA', rPanel, lPanel, pHolder)}} className="flex items-center justify-start w-full h-20 border-black border-b-2"> 
                                 <div className="h-full w-1/3 bg-cover" style={{backgroundImage: `url(${suggestion[1]})`}} ></div>
                                 <div className="ms-auto mr-auto">{suggestion[0]}</div>
                             </div>

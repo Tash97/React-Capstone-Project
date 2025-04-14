@@ -20,6 +20,15 @@ interface Ability{
     abilityDetails: string
   }
 
+  interface Moves{
+    name: string
+    pp: number
+    power: number
+    type: string
+    elementType: string
+
+  }
+
 interface Types {
     type1: string
     type2: string
@@ -28,7 +37,7 @@ interface Types {
 interface ExtendedPokeInfo{
     stats: Stats 
     abilities: Array<Ability> 
-    moves: Array<string> 
+    moves: Array<Moves> 
     types: Types
     baseEvolution: string
     baseEvolutionPic: string
@@ -43,6 +52,7 @@ interface ExtendedPokeInfo{
 
 interface Props{
     extendedPokeInfo: ExtendedPokeInfo
+    loadingBool: boolean
 }
 
 interface MinMaxes {
@@ -75,9 +85,7 @@ interface StatBarRatio {
 
 
 
-
-
-function ExtendedPokeStats({extendedPokeInfo}: Props) {
+function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
     
     const {stats, abilities, moves, types, baseEvolution, baseEvolutionPic, secondEvolutions, secondEvolutionPics, thirdEvolutions, thirdEvolutionPics, name, shinyPictures} = extendedPokeInfo
     const [display, setDisplay] = useState<string>('stats')
@@ -480,7 +488,6 @@ function ExtendedPokeStats({extendedPokeInfo}: Props) {
 
 
 
-console.log("Hi from extended stats coponent");
 
 
 
@@ -497,6 +504,9 @@ console.log("Hi from extended stats coponent");
 
             {display === 'stats' ? (
             <div  className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+
+                {loadingBool ? (<>Loading . . .</>) : (<>
+
                     <div className='grid grid-rows-11 grid-cols-16 border-2 border-blue-600 bg-blue-500 rounded-2xl w-8/12 h-3/4'>
                         <div className='grid justify-center items-center col-span-12 row-span-2 border-2 border-blue-600 rounded-tl-xl font-bold text-2xl'>Stats</div>
                             <div className='grid justify-center items-center col-span-4 row-span-1 border-2 border-blue-600 rounded-tr-xl font-bold text-xl'>Range</div>
@@ -566,6 +576,7 @@ console.log("Hi from extended stats coponent");
                                 <div className="font-semibold leading-none">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
                             </div>
                     </div>
+
                     <div className='grid grid-cols-1 grid-rows-14 w-1/4 h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                         <div className='grid col-span-1 row-span-2 border-blue-600 border-b-4 font-bold text-2xl justify-center items-center'>Abilities</div>
                         
@@ -628,25 +639,58 @@ console.log("Hi from extended stats coponent");
                             </>
                         )}
                     </div>
+                </>)}
             </div>
             ) : display === "moves" ? (
-            <div className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
-                <div ref={moveScroll} className='grid grid-rows-14 grid-cols-1 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
-                    <div className="grid justify-center items-center font-bold text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">Moves</div>
-                    <div className='ms-8 overflow-y-scroll row-span-12 col-span-1 max-h-[100%]  font-semibold text-3xl'>
+            <div className='flex justify-around items-start overflow-y-scroll bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+
+                {loadingBool ? (<>Loading . . .</>) : (
+
+                <div ref={moveScroll} className='border-4 mt-10 border-blue-600 bg-blue-500 rounded-2xl w-10/12'>
+                    <div className="flex justify-between items-center font-bold text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">
+                        <span className='w-1/4 h-full border-blue-600 border-e-4 flex justify-start ps-4' >Type</span>
+                        <span className='w-[40%] h-full border-blue-600 border-e-4 flex justify-start ps-8 '>Name</span>
+                        <span className='w-[10%] h-full border-blue-600 border-e-4 flex justify-center'>PP</span>
+                        <span className='w-1/4 h-full flex justify-center'>Power</span>
+
+
+                    </div>
+                    <div className=' font-semibold text-3xl'>
                         {moves.map(move =>{
                                 return(
-                                    <div key={uuidv4()} className='flex justify-start pt-3 ps-1 border-b-4 border-s-4 border-blue-600'>
-                                        {move}
+                                    <div key={uuidv4()} className='flex justify-between border-b-4 border-s-4= border-blue-600'>
+                                        <span className='w-[25%] h-full border-blue-600 border-e-4 flex justify-center'>
+                                            <div className='w-4/5 ' >
+                                                {move.elementType}
+                                            </div>
+                                        </span>
+                                        <span className='w-[40%] h-full border-blue-600 border-e-4 flex justify-center'>
+                                            <div className='w-4/5' >
+                                                {move.name}
+                                            </div>
+                                        </span>
+                                        <span className='w-[10%] h-full border-blue-600 border-e-4 flex justify-center'>
+                                            <div className='' >
+                                                {move.pp || <>--</>}
+                                            </div>
+                                        </span>
+                                        <span className='w-[25%] h-full flex justify-center'>
+                                            <div className='' >
+                                                {move.power || <>--</>}
+                                            </div>
+                                        </span>
                                     </div>
                                 )        
                         })}
                     </div>
                 </div>
-                
+                )}
             </div>
             ) : display === "typeMatch" ? (
             <div className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+                
+                {loadingBool ? (<>Loading . . .</>) : (<>
+                
                 <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Weaknesses</div>
                     <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
@@ -672,11 +716,14 @@ console.log("Hi from extended stats coponent");
                         })}
                     </div>
                 </div>
+                </>)}
             </div>
             ) : display === "variations" ? (  
             <div className='flex flex-col justify-around bg-black bg-opacity-80 col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
 
-                {secondEvolutions.length === 1 && thirdEvolutions.length === 1 ? (
+                
+
+                {secondEvolutions.length === 1 && thirdEvolutions.length === 1 && !loadingBool ? (
                 <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
@@ -701,7 +748,7 @@ console.log("Hi from extended stats coponent");
                         </div>
                     </div>
                 </div>
-                ) : secondEvolutions.length === 2 ? (
+                ) : secondEvolutions.length === 2 && !loadingBool ? (
 
                 <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
                         <div className='grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-4 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
@@ -725,7 +772,7 @@ console.log("Hi from extended stats coponent");
                         </div>
                     
                 </div>
-                ) : thirdEvolutions.length === 2 ? (
+                ) : thirdEvolutions.length === 2 && !loadingBool ? (
                 <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
                         <div className='z-20 grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-1 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
@@ -751,7 +798,7 @@ console.log("Hi from extended stats coponent");
                             <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
                         </div>
                 </div>
-                ) : secondEvolutions.length === 8 ? (
+                ) : secondEvolutions.length === 8 && !loadingBool ? (
                 <div className='grid grid-rows-23 grid-cols-40 w-full h-full'>
                             <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-2 row-start-7 border-4 border-blue-600 bg-blue-500 rounded-2xl">
                                 <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
@@ -797,7 +844,7 @@ console.log("Hi from extended stats coponent");
                             <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
                         </div>
                 </div>
-                ) : thirdEvolutions.length === 0 && secondEvolutions.length === 1 ? (
+                ) : thirdEvolutions.length === 0 && secondEvolutions.length === 1 && !loadingBool ? (
                 <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
@@ -818,7 +865,7 @@ console.log("Hi from extended stats coponent");
                         </div>
                     </div>
                 </div>
-                ) : (
+                ) : !loadingBool ? (
                 <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
@@ -833,7 +880,7 @@ console.log("Hi from extended stats coponent");
                         </div>
                     </div>
                 </div>
-                )}
+                ): <>Loading . . .</>}
 
             </div>
             ) : <></>}
