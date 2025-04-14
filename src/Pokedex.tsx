@@ -1,15 +1,32 @@
 import Suggestions from "./Suggestions";
-import { useRef, useEffect, forwardRef} from "react";
+import { useRef, useEffect} from "react";
 
-interface Props{
-    pokeInformation: Array<string>
-    sugNames: Array<string>
-    sugPics: Array<string>
-    searchBar: () => void
-    searchBySuggestion: (name: string) => void
+interface PokeInfo{
+    name: string 
+    weight: string
+    height: string
+    type1: string
+    type2: string
+    photo: string
+    entry: string
 }
 
-const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, sugNames, sugPics, searchBar, searchBySuggestion}, searchRef){
+interface Props{
+    pokeInformation: PokeInfo
+    search: (name: string, suggestion: string) => void
+    pokeNames: Array<string>
+}
+
+const Pokedex = ({pokeInformation, search, pokeNames }: Props) => {
+
+    const {name, weight, height, type1, type2, photo, entry} = pokeInformation
+
+
+    
+
+    
+    console.log("Hi from pokedex component")
+
 
     {/* variables for pokedex open animation */}
     const panelHolder = useRef<SVGSVGElement>(null)
@@ -17,16 +34,19 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
     const leftPanel = useRef<SVGPathElement>(null)
     {/* function to initiate pokedex open animation */}
     useEffect(()=>{
-        if(rightPanel.current && leftPanel.current && pokeInformation[0] !== undefined){
+        if(rightPanel.current && leftPanel.current && pokeInformation.name !== ""){
             window.scrollTo(0, window.scrollY + 100)
-            rightPanel.current.style.animation = 'openRight 1.5s ease-in-out 1'
-            leftPanel.current.style.animation = 'openLeft 1.5s ease-in-out 1'
+            rightPanel.current.style.transition = 'transform 2s'
+            leftPanel.current.style.transition = 'transform 2s'
+            rightPanel.current.style.transform = 'translateX(95%) scale(0 , 1)'
+
+            leftPanel.current.style.transform = 'translateX(5%) scale(0 , 1)'
             const timerHideLeft = () => {
                 if(panelHolder.current){
                     panelHolder.current.style.visibility = 'hidden'
                 }
             }
-            setTimeout(timerHideLeft, 1300)
+            setTimeout(timerHideLeft, 2000)
         }
     },[pokeInformation])
 
@@ -41,48 +61,23 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
     const pokeData = useRef<HTMLDivElement>(null);
     let scroll: number = 0;
 
-    let pokeeName: string = ''
-    let pokeWeight: string = ''
-    let pokeHeight: string = ''
-    let pokeeType1: string = ''
-    let pokePhoto: string  = ''
-    let pokeEntry: string  = ''
-    let pokeeType2: string = ''
-    
-    if(pokeInformation.length !== 0){
-        if(pokeInformation[6] !== undefined){
-        pokeeType2 = pokeInformation[6]
-        }
-    }
 
-    if(pokeInformation.length !== 0){
-        pokeeName = pokeInformation[0]
-        pokeWeight = pokeInformation[1]
-        pokeHeight = pokeInformation[2]
-        pokeeType1 = pokeInformation[3]
-        pokePhoto = pokeInformation[4]
-        pokeEntry = pokeInformation[5]
-    }
     
     {/* function for setting pokedex display */}
     useEffect(()=> {
-    if(pokeeName !== '' && display.current && displayEntry.current && down.current && pokeData.current){
-        display.current.className = 'flex flex-col border-2 border-black rounded w-[92.5%] h-[92.5%] bg-blue-500'
-        displayEntry.current.className = 'flex w-full overflow-auto ps-5  pt-4 text-[24px] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl'
-        pokeData.current.className = 'flex flex-col justify-center text-start w-full h-full font-bold text-xl font-pokemon'
-    }
-    if(pokeeName.length > 9 && pokeScreenName.current){
+
+    if(name.length > 9 && pokeScreenName.current){
         pokeScreenName.current.className = 'text-[22px] mb-2'
     }
     if(addRef.current && pokeInfo.current){
-        if(pokeeType2 !== ''){
+        if(type2 !== ''){
             addRef.current.className = ''
         } else{
             addRef.current.className = 'hidden'
             pokeInfo.current.className = 'flex flex-col justify-between text-lg h-[30%] mb-5'
         }
     } 
-    }, [pokeInformation, pokeeName, pokeeType2])
+    }, [pokeInformation, name.length, type2])
 
     {/* functions for disabling normal scroll and setting click scroll on pokedex entry */}
     const overflow = useRef<HTMLDivElement>(null)
@@ -110,7 +105,8 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
             up.current.className = 'hidden'
             down.current.className = 'mt-auto animate-bounce'
         }
-    },[pokeeName])
+    },[pokeInformation])
+    
     if(overflow.current){
         overflow.current.onscroll = () => {
             if(overflow.current){
@@ -120,58 +116,67 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
     }
 
     {/* function for capitalizing poke information */}
-    const letterGrab1 = pokeeName.charAt(0)
-    const restOfName1 = pokeeName.slice(1)
+    const letterGrab1 = name.charAt(0)
+    const restOfName1 = name.slice(1)
     const letterCap1 = letterGrab1.toUpperCase()
     const pokeName = letterCap1 + restOfName1
-    const letterGrab2 = pokeeType1.charAt(0)
-    const restOfName2 = pokeeType1.slice(1)
+    const letterGrab2 = type1.charAt(0)
+    const restOfName2 = type1.slice(1)
     const letterCap2 = letterGrab2.toUpperCase()
     const pokeType1 = letterCap2 + restOfName2
-    const letterGrab3 = pokeeType2.charAt(0)
-    const restOfName3 = pokeeType2.slice(1)
+    const letterGrab3 = type2.charAt(0)
+    const restOfName3 = type2.slice(1)
     const letterCap = letterGrab3.toUpperCase()
     const pokeType2 = letterCap + restOfName3
 
+
+
+
+
+
+    
+
     return (
-        <div className='relative flex w-[32.27rem] h-3/3 mt-3 mb-3'>
-                    <div className="absolute left-[49.5%] top-[22%] z-50 h-[5%] w-[54.5%]">
-                        <div className="-mb-1 w-10/12 h-[90%]" >
-                            <input onChange={() => {searchBar()}} ref={searchRef} className="rounded outline ps-4 w-full h-full text-large bg-slate-200"  type="text" />
-                            <Suggestions SugName={sugNames} SugPic={sugPics} searchByClick={searchBySuggestion} />
-        
-                        </div>
-                        
-                    </div>
+        <div className='relative  flex w-[32.27rem] h-3/3 mt-3 mb-3'>
+            <div className="absolute left-[49.5%] top-[22%] z-50 h-[5%] w-[54.5%]">
+                <div className="-mb-1 w-10/12 h-[90%]" >
+                    <Suggestions search={search} pokeNames={pokeNames}  />
+                </div>            
+            </div>
             <div className="absolute z-20 w-[32.313rem] h-[100%]">
-                <div className='flex flex-col w-[97%] h-[98%] ms-2 mt-2 justify-end items-center'>
-                    
+                <div className='flex flex-col w-[97%] h-[98%] ms-2 mt-2 justify-end items-center'>   
                     <div className="flex w-full h-[75%] justify-center items-center">
-                    <div ref={display} className="flex flex-col border-2 border-black rounded w-[92.5%] h-[92.5%] bg-blue-500">
-                <div className="flex w-full h-[60%] ">
-                    <div className="flex h-full w-1/2 justify-center items-center ">
-                        <div style={{backgroundImage: `url(${pokePhoto})`}} className="w-full h-[80%] bg-no-repeat bg-cover"></div>
-                    </div>
-                    <div className="flex justify-center items-center h-full w-1/2">
-                        <div ref={pokeData} className="hidden">
-                            <div ref={pokeScreenName} className="text-[24px] mb-2">{pokeName}</div>
-                            <div ref={pokeInfo} className="flex flex-col justify-between text-lg h-[45%] mb-3">
-                                <div>Type: {pokeType1}</div>
-                                <div ref={ addRef } className="hidden">Type 2: {pokeType2}</div>
-                                <div>Weight: {pokeWeight}</div>
-                                <div>Height: {pokeHeight}</div>
+                        <div ref={display} className="flex flex-col border-2 border-black rounded w-[92.5%] h-[92.5%] bg-blue-500">
+                            <div className="flex w-full h-[60%] ">
+                                <div className="flex h-full w-1/2 justify-center items-center ">
+                                    <div style={{backgroundImage: `url(${photo})`}} className="w-full h-[80%] bg-no-repeat bg-cover"></div>
+                                </div>
+                                <div className="flex justify-center items-center h-full w-1/2">
+                                    <div ref={pokeData} className="flex flex-col justify-center text-start w-full h-full font-bold text-xl font-pokemon">
+                                        <div ref={pokeScreenName} className="text-[24px] mb-2">{pokeName}</div>
+                                        <div ref={pokeInfo} className="flex flex-col justify-between text-lg h-[45%] mb-3">
+                                            <div>Type: {pokeType1}</div>
+                                            <div ref={ addRef } className="hidden">Type 2: {pokeType2}</div>
+                                            <div>Weight: {weight}</div>
+                                            <div>Height: {height}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ref={displayEntry} className="flex w-full overflow-auto ps-5  pt-4 text-[24px] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl">            
+                                <div ref={overflow} className="no-scrollbar overflow-auto font-pokemon" >
+                                    {entry}
+                                </div>
+                                <div className="flex flex-col ms-2 me-2">
+                                    <div className="mb-auto hidden" ref={up} onClick={()=>{scroller('up')}} >
+                                        <i className="fa-solid fa-caret-up"></i>
+                                    </div>
+                                    <div className="mt-auto" ref={down} onClick={()=>{scroller('down')}} >
+                                        <i className="fa-solid fa-caret-down"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div ref={displayEntry} className="hidden">            
-                    <div ref={overflow} className="no-scrollbar overflow-auto font-pokemon" >{pokeEntry}</div>
-                    <div className="flex flex-col ms-2 me-2">
-                        <div className="mb-auto hidden" ref={up} onClick={()=>{scroller('up')}} ><i className="fa-solid fa-caret-up"></i></div>
-                        <div className="mt-auto" ref={down} onClick={()=>{scroller('down')}} ><i className="fa-solid fa-caret-down"></i></div>
-                    </div>
-                </div>
-            </div>
                     </div>
                 </div>
             </div>
@@ -234,6 +239,6 @@ const Pokedex = forwardRef<HTMLInputElement, Props>(function ({pokeInformation, 
             
         </div>
     )
-})
+}
 
 export default Pokedex

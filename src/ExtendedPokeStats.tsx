@@ -1,28 +1,39 @@
 import {useState, useEffect, useRef} from 'react'
-import MovesMap from './Moves'
-import WeaknessMap from './WeaknessMap'
-import ResistanceMap from './ResistanceMap'
+import { v4 as uuidv4 } from 'uuid'
 
 
 
-interface AbilityDetails{
-    name: string
-    url: string
+
+
+interface Stats{
+    hp: number
+    attack: number
+    defense: number
+    specialAttack: number
+    specialDefense: number
+    speed: number
 }
+
+
 interface Ability{
-    ability: AbilityDetails
-    is_hidden: boolean
-    slot: number
+    ability: string
+    abilityDetails: string
+  }
+
+interface Types {
+    type1: string
+    type2: string
 }
-interface Props{
-    baseStats: Array<number>
-    Abilities: Array<Ability>
-    moves:Array<string>
-    types: Array<string>
+
+interface ExtendedPokeInfo{
+    stats: Stats 
+    abilities: Array<Ability> 
+    moves: Array<string> 
+    types: Types
     baseEvolution: string
     baseEvolutionPic: string
     secondEvolutions: Array<string>
-    secondEvolutionPics: Array<string>
+    secondEvolutionPics: Array<string> 
     thirdEvolutions: Array<string>
     thirdEvolutionPics: Array<string>
     name: string
@@ -30,114 +41,58 @@ interface Props{
 }
 
 
+interface Props{
+    extendedPokeInfo: ExtendedPokeInfo
+}
+
+interface MinMaxes {
+    minLvl50: number
+    maxLvl50: number
+    minLvl100: number
+    maxLvl100: number
+
+}
+
+interface StatRange {
+    hp: MinMaxes,
+    attack: MinMaxes,
+    defense: MinMaxes,
+    specialAttack: MinMaxes,
+    specialDefense: MinMaxes,
+    speed: MinMaxes
+    baseStatTotal: number
+}
+
+interface StatBarRatio {
+    hp: number
+    attack: number
+    defense: number
+    specialAttack: number
+    specialDefense: number
+    speed: number
+
+}
 
 
 
-function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, baseEvolutionPic, secondEvolutions, secondEvolutionPics, thirdEvolutions, thirdEvolutionPics, name, shinyPictures}: Props) {
+
+
+function ExtendedPokeStats({extendedPokeInfo}: Props) {
     
+    const {stats, abilities, moves, types, baseEvolution, baseEvolutionPic, secondEvolutions, secondEvolutionPics, thirdEvolutions, thirdEvolutionPics, name, shinyPictures} = extendedPokeInfo
+    const [display, setDisplay] = useState<string>('stats')
 
-    {/* variables for evelutions and variations display */}
-    const regularEvolutionLine = useRef<HTMLDivElement>(null)
-    const twoSecondEvolutions = useRef<HTMLDivElement>(null)
-    const twoThirdEvolutions = useRef<HTMLDivElement>(null)
-    const eeveeEvolution  = useRef<HTMLDivElement>(null)
-    const twoEvolutions = useRef<HTMLDivElement>(null)
-    const oneEvolution = useRef<HTMLDivElement>(null)
+    const changeExtendedDisplay = (choice: string) => {
+        setDisplay(choice)
+    }
 
-    {/* function to grab correct evolution and variations display*/}
-    useEffect(()=>{
-        if(regularEvolutionLine.current && twoSecondEvolutions.current && twoThirdEvolutions.current && eeveeEvolution.current && twoEvolutions.current && oneEvolution.current){
-            if(secondEvolutions.length === 2){
-                twoSecondEvolutions.current.className = 'grid grid-rows-22 grid-cols-40 w-full h-full'
-                regularEvolutionLine.current.className = 'hidden'
-                twoThirdEvolutions.current.className = 'hidden'
-                eeveeEvolution.current.className = 'hidden'
-                twoEvolutions.current.className = 'hidden'
-                oneEvolution.current.className = 'hidden'
-
-            } else if(thirdEvolutions.length === 2){
-                twoThirdEvolutions.current.className = 'grid grid-rows-22 grid-cols-40 w-full h-full'
-                regularEvolutionLine.current.className = 'hidden'
-                twoSecondEvolutions.current.className = 'hidden'
-                eeveeEvolution.current.className = 'hidden'
-                twoEvolutions.current.className = 'hidden'
-                oneEvolution.current.className = 'hidden'
-
-            } else if(secondEvolutions.length === 8){
-                eeveeEvolution.current.className = 'grid grid-rows-23 grid-cols-40 w-full h-full'
-                regularEvolutionLine.current.className = 'hidden'
-                twoSecondEvolutions.current.className = 'hidden'
-                twoThirdEvolutions.current.className = 'hidden'
-                twoEvolutions.current.className = 'hidden'
-                oneEvolution.current.className = 'hidden'
-
-            } else if(secondEvolutions.length === 1 && thirdEvolutions.length === 1){
-                regularEvolutionLine.current.className = 'flex flex-col justify-around w-full h-full'
-                twoSecondEvolutions.current.className = 'hidden'
-                twoThirdEvolutions.current.className = 'hidden'
-                eeveeEvolution.current.className = 'hidden'
-                twoEvolutions.current.className = 'hidden'
-                oneEvolution.current.className = 'hidden'
-
-            } else if(thirdEvolutions.length === 0 && secondEvolutions.length === 1){
-                regularEvolutionLine.current.className = 'hidden'
-                twoSecondEvolutions.current.className = 'hidden'
-                twoThirdEvolutions.current.className = 'hidden'
-                eeveeEvolution.current.className = 'hidden'
-                twoEvolutions.current.className = 'flex flex-col justify-around w-full h-full'
-                oneEvolution.current.className = 'hidden'
-
-            } else{
-                regularEvolutionLine.current.className = 'hidden'
-                twoSecondEvolutions.current.className = 'hidden'
-                twoThirdEvolutions.current.className = 'hidden'
-                eeveeEvolution.current.className = 'hidden'
-                twoEvolutions.current.className = 'hidden'
-                oneEvolution.current.className = 'flex flex-col justify-around w-full h-full'
-            }
-        }
-    },[baseEvolution, secondEvolutions.length, thirdEvolutions.length])
-    
-    {/* variables for extended stats tab displays */}
-    const statsAndAbilitiesBox = useRef<HTMLDivElement>(null)
-    const moveBox = useRef<HTMLDivElement>(null)
-    const typeEffectivenessBox = useRef<HTMLDivElement>(null)
-    const variationBox = useRef<HTMLDivElement>(null)
-
+   
     {/* functions to change extended stats tab */}
-    const statsBoxGrab = () => {
-        if(statsAndAbilitiesBox.current && moveBox.current && typeEffectivenessBox.current && variationBox.current){
-            statsAndAbilitiesBox.current.className = 'flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'
-            moveBox.current.className = 'hidden'
-            typeEffectivenessBox.current.className = 'hidden'
-            variationBox.current.className = 'hidden'
-        }
-    }
-    const moveBoxGrab = () => {
-        if(statsAndAbilitiesBox.current && moveBox.current && typeEffectivenessBox.current && variationBox.current){
-            statsAndAbilitiesBox.current.className = 'hidden'
-            moveBox.current.className = 'flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'
-            typeEffectivenessBox.current.className = 'hidden'
-            variationBox.current.className = 'hidden'
-        }
-    }
-    const typeEffectivenessBoxGrab = () => {
-        if(statsAndAbilitiesBox.current && moveBox.current && typeEffectivenessBox.current && variationBox.current){
-            statsAndAbilitiesBox.current.className = 'hidden'
-            moveBox.current.className = 'hidden'
-            typeEffectivenessBox.current.className = 'flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'
-            variationBox.current.className = 'hidden'
-        }
-    }
-    const variationsBoxGrab = () => {
-        if(statsAndAbilitiesBox.current && moveBox.current && typeEffectivenessBox.current && variationBox.current){
-            statsAndAbilitiesBox.current.className = 'hidden'
-            moveBox.current.className = 'hidden'
-            typeEffectivenessBox.current.className = 'hidden'
-            variationBox.current.className = 'flex flex-col justify-around bg-black bg-opacity-80 col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'
-        }
-    }
+ 
+    const [weaknesses, setWeaknesses] = useState<Array<string>>([])
+    const [resistances, setresistances] = useState<Array<string>>([])
 
+    useEffect(()=>{
     {/* variables for type effectiveness display */}
     const normal: string = 'Normal: '
     const fire: string = 'Fire: '
@@ -163,167 +118,166 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
     const weak: string = '1/2 Damage'
     const superWeak: string = '1/4 Damage'
 
-    const [weaknesses, setWeaknesses] = useState<Array<string>>([])
-    const [resistances, setresistances] = useState<Array<string>>([])
+
+
 
     {/* function for setting type effectiveness display */}
-    useEffect(()=>{
-    if(types[1] === ''){
-        if(types[0] === 'normal'){
+    if(types.type2 === ''){
+        if(types.type1 === 'normal'){
             setWeaknesses([fighting + effective])
             setresistances([ghost + immune])
-        } else if(types[0] === 'fire'){
+        } else if(types.type1 === 'fire'){
             setWeaknesses([water + effective, ground + effective, rock + effective])
             setresistances([fire + weak, grass + weak, ice + weak, steel + weak, fairy + weak])
-        } else if(types[0] === 'water'){
+        } else if(types.type1 === 'water'){
             setWeaknesses([grass + effective, electric + effective])
             setresistances([fire + weak, water + weak, ice + weak, steel + weak])
-        } else if(types[0] === 'grass'){
+        } else if(types.type1 === 'grass'){
             setWeaknesses([fire + effective, ice + effective, poison + effective, flying + effective, bug + effective])
             setresistances([water + weak, grass + weak, electric + weak, ground + weak])
-        } else if(types[0] === 'electric'){
+        } else if(types.type1 === 'electric'){
             setWeaknesses([ground + effective])
             setresistances([electric + weak, flying + weak, steel + weak])
-        } else if(types[0] === 'ice'){
+        } else if(types.type1 === 'ice'){
             setWeaknesses([fire + effective, fighting + effective, rock + effective, steel + effective])
             setresistances([ice + weak])
-        } else if(types[0] === 'fighting'){
+        } else if(types.type1 === 'fighting'){
             setWeaknesses([flying + effective, psychic + effective, fairy + effective])
             setresistances([bug + weak, rock + weak, dark + weak])
-        } else if(types[0] === 'poison'){
+        } else if(types.type1 === 'poison'){
             setWeaknesses([ground + effective, psychic + effective])
             setresistances([grass + weak, fighting + weak, poison + weak, bug + weak, fairy + weak])
-        } else if(types[0] === 'ground'){
+        } else if(types.type1 === 'ground'){
             setWeaknesses([water + effective, grass, ice + effective])
             setresistances([electric + immune, poison + weak, rock])
-        } else if(types[0] === 'flying'){
+        } else if(types.type1 === 'flying'){
             setWeaknesses([electric + effective, ice + effective, rock + effective])
             setresistances([grass + weak, fighting + weak, bug + weak])
-        } else if(types[0] === 'psychic'){
+        } else if(types.type1 === 'psychic'){
             setWeaknesses([bug + effective, ghost + effective, dark + effective])
             setresistances([fighting + weak, psychic + weak])
-        } else if(types[0] === 'bug'){
+        } else if(types.type1 === 'bug'){
             setWeaknesses([fire + effective, flying + effective, rock + effective])
             setresistances([grass + weak, fighting + weak, ground + weak])
-        } else if(types[0] === 'rock'){
+        } else if(types.type1 === 'rock'){
             setWeaknesses([water + effective, grass + effective, fighting + effective, ground + effective, steel + effective])
             setresistances([normal + weak, fire + weak, poison + weak, flying + weak])
-        } else if(types[0] === 'ghost'){
+        } else if(types.type1 === 'ghost'){
             setWeaknesses([ghost + effective, dark + effective])
             setresistances([normal + immune, fighting + immune, poison + weak, bug + weak])
-        } else if(types[0] === 'dragon'){
+        } else if(types.type1 === 'dragon'){
             setWeaknesses([ice + effective, dragon + effective, fairy + effective])
             setresistances([fire + weak, water + weak, grass + weak, electric + weak])
-        } else if(types[0] === 'dark'){
+        } else if(types.type1 === 'dark'){
             setWeaknesses([fighting + effective, bug + effective, fairy + effective])
             setresistances([psychic + immune, ghost + weak, dark + weak])
-        } else if(types[0] === 'steel'){
+        } else if(types.type1 === 'steel'){
             setWeaknesses([fire + effective, fighting + effective, ground + effective])
             setresistances([normal + weak, grass + weak, ice + weak, poison + immune, flying + weak, psychic + weak, bug + weak, rock + weak, dragon + weak, steel + weak, fairy + weak])
-        } else if(types[0] === 'fairy'){
+        } else if(types.type1 === 'fairy'){
             setWeaknesses([poison + effective, steel + effective])
             setresistances([fighting + weak, bug + weak, dragon + immune, steel + weak])
         }
 
     } else {
-        if(types[0] === 'grass' || types[1] === 'grass'){
-            if(types[1] === 'poison'){
+        if(types.type1 === 'grass' || types.type2 === 'grass'){
+            if(types.type2 === 'poison'){
                 setWeaknesses([flying + effective,fire + effective,psychic + effective,ice + effective])
                 setresistances([fighting + weak,water + weak,electric + weak,fairy + weak, grass + superWeak])
-            }  else if(types[1] === 'pyschic'){
+            }  else if(types.type2 === 'pyschic'){
                 setWeaknesses([bug + superEffective, flying + effective, poison + effective, ghost + effective, fire + effective, ice + effective, dark + effective])
                 setresistances([fighting + weak, ground + weak, water + weak, grass + weak, electric + weak, psychic + weak])
-            } else if(types[0] === 'bug'){
+            } else if(types.type1 === 'bug'){
                 setWeaknesses([flying + superEffective, fire + superEffective, poison + effective, rock + effective, bug + effective, ice + effective])
                 setresistances([fighting + weak, water + weak, electric + weak, ground + superWeak, grass + superWeak])
             }
-        } else if(types[0] === 'fire' && types[1] === 'flying'){
+        } else if(types.type1 === 'fire' && types.type2 === 'flying'){
             setWeaknesses([rock + superEffective, water + effective, electric + effective])
             setresistances([fighting + weak, steel + weak, fire + weak, fairy + weak, bug + superWeak, grass + superWeak, ground + immune])
-        } else if(types[0] === 'bug'){
-            if(types[1] === 'flying'){
+        } else if(types.type1 === 'bug'){
+            if(types.type2 === 'flying'){
                 setWeaknesses([rock + superEffective, flying + effective, fire + effective, electric + effective, ice + effective])
                 setresistances([bug + weak, fighting + superWeak, grass + superWeak, ground + immune])
-            } else if(types[1] === 'poison'){
+            } else if(types.type2 === 'poison'){
                 setWeaknesses([flying + effective, rock + effective, fire + effective, psychic + effective])
                 setresistances([poison + weak, bug + weak, fairy + weak, fighting + superWeak, grass + superWeak])
             }
-        }else if(types[0] === 'normal' || types[1] === 'normal'){
-            if(types[0] === 'flying' || types[1] === 'flying'){
+        }else if(types.type1 === 'normal' || types.type2 === 'normal'){
+            if(types.type1 === 'flying' || types.type2 === 'flying'){
                 setWeaknesses([rock + effective, electric + effective, ice + effective])
                 setresistances([bug + weak, grass + weak, ground + immune, ghost + immune])
-            } else if(types[0] === 'fairy' || types[1] === 'fairy'){
+            } else if(types.type1 === 'fairy' || types.type2 === 'fairy'){
                 setWeaknesses([poison + effective, steel + effective])
                 setresistances([bug + weak, dark + weak, ghost + immune, dragon + immune])
             }
-        } else if(types[0] === 'poison' || types[1] === 'poison'){
-            if(types[0] === 'ground' || types[1] === 'ground'){
+        } else if(types.type1 === 'poison' || types.type2 === 'poison'){
+            if(types.type1 === 'ground' || types.type2 === 'ground'){
                 setWeaknesses([ground + effective, water + effective, psychic + effective, ice + effective])
                 setresistances([fighting + weak, rock + weak, bug + weak, fairy + weak, poison + superWeak, electric + immune])
-            }else if(types[0] === 'flying' || types[1] === 'flying'){
+            }else if(types.type1 === 'flying' || types.type2 === 'flying'){
                 setWeaknesses([rock + effective, electric + effective, psychic + effective, ice + effective])
                 setresistances([poison + weak, fairy + weak, fighting + superWeak, bug + superWeak, grass + superWeak, ground + immune])
-            }else if(types[0] === 'water' || types[1] === 'water'){
+            }else if(types.type1 === 'water' || types.type2 === 'water'){
                 setWeaknesses([ground + effective, electric + effective, psychic + effective])
                 setresistances([fighting + weak, poison + weak, bug + weak, steel + weak, fire + weak, water + weak, ice + weak, fairy + weak])
-            } else if(types[0] === 'ghost' || types[1] === 'ghost'){
+            } else if(types.type1 === 'ghost' || types.type2 === 'ghost'){
                 setWeaknesses([ground + effective, ghost + effective, psychic + effective, dark + effective])
                 setresistances([grass + weak, fairy + weak, poison + superWeak, bug + superWeak, normal + immune, fighting + immune])
             }
-        } else if(types[0] === 'water' || types[1] === 'water'){
-            if(types[0] === 'fighting' || types[1] === 'fighting'){
+        } else if(types.type1 === 'water' || types.type2 === 'water'){
+            if(types.type1 === 'fighting' || types.type2 === 'fighting'){
                 setWeaknesses([flying + effective, grass + effective, electric + effective, psychic + effective, fairy + effective])
                 setresistances([rock + weak, bug + weak, steel + weak, fire + weak, water + weak, ice + weak, dark + weak])
-            }else if(types[0] === 'psychic' || types[1] === 'psychic'){
+            }else if(types.type1 === 'psychic' || types.type2 === 'psychic'){
                 setWeaknesses([bug + effective, ghost + effective, grass + effective, electric + effective, dark + effective])
                 setresistances([fighting + weak, steel + weak, fire + weak, water + weak, psychic + weak, ice + weak])
-            }else if(types[0] === 'ice' || types[1] === 'ice'){
+            }else if(types.type1 === 'ice' || types.type2 === 'ice'){
                 setWeaknesses([fighting + effective, rock + effective, grass + effective, electric + effective])
                 setresistances([water + weak, ice + superWeak])
-            }else if(types[0] === 'flying' || types[1] === 'flying'){
+            }else if(types.type1 === 'flying' || types.type2 === 'flying'){
                 setWeaknesses([electric + superEffective, rock + effective])
                 setresistances([fighting + weak, bug + weak, steel + weak, fire + weak, water + weak, ground + immune])
-            }else if(types[0] === 'rock' || types[1] === 'rock'){
+            }else if(types.type1 === 'rock' || types.type2 === 'rock'){
                 setWeaknesses([grass + superEffective, fighting + effective, ground + effective, electric + effective])
                 setresistances([normal + weak, flying + weak, poison + weak, ice + weak, fire + superWeak])
             }
-        } else if(types[0] === 'rock' || types[1] === 'rock'){
-            if(types[0] === 'ground' || types[1] === 'ground'){
+        } else if(types.type1 === 'rock' || types.type2 === 'rock'){
+            if(types.type1 === 'ground' || types.type2 === 'ground'){
                 setWeaknesses([water + superEffective, grass + superEffective, fighting + effective, ground + effective, steel + effective, ice + effective])
                 setresistances([normal + weak, flying + weak, rock + weak, fire + weak, poison + superWeak, electric + immune])
-            }else if(types[0] === 'flying' || types[1] === 'flying'){
+            }else if(types.type1 === 'flying' || types.type2 === 'flying'){
                 setWeaknesses([rock + effective, steel + effective, water + effective, electric + effective, ice + effective])
                 setresistances([normal + weak, flying + weak, poison + weak, bug + weak, fire + weak, ground + immune])
             }
-        } else if(types[0] === 'electric' || types[1] === 'electric'){
-            if(types[0] === 'steel' || types[1] === 'steel'){
+        } else if(types.type1 === 'electric' || types.type2 === 'electric'){
+            if(types.type1 === 'steel' || types.type2 === 'steel'){
                 setWeaknesses([ground + superEffective, fighting + effective, fire + effective])
                 setresistances([normal + weak, rock + weak, bug + weak, grass + weak, electric + weak, psychic + weak, ice + weak, dragon + weak, fairy + weak, flying + superWeak, steel + superWeak, poison + immune])
-            } else if(types[0] === 'flying' || types[1] === 'flying'){
+            } else if(types.type1 === 'flying' || types.type2 === 'flying'){
                 setWeaknesses([rock + effective, ice + effective])
                 setresistances([fighting + weak, flying + weak, bug + weak, steel + weak, grass + weak, ground + immune])
             }
-        } else if(types[0] === 'psychic' || types[1] === 'psychic'){
-            if(types[0] === 'fairy' || types[1] === 'fairy'){
+        } else if(types.type1 === 'psychic' || types.type2 === 'psychic'){
+            if(types.type1 === 'fairy' || types.type2 === 'fairy'){
                 setWeaknesses([poison + effective, ghost + effective, steel + effective])
                 setresistances([psychic + weak, fighting + superWeak, dragon + immune])
             }
-        } else if(types[0] === 'flying' || types[1] === 'flying'){
-            if(types[0] === 'ice' || types[1] === 'ice'){
+        } else if(types.type1 === 'flying' || types.type2 === 'flying'){
+            if(types.type1 === 'ice' || types.type2 === 'ice'){
                 setWeaknesses([rock + superEffective, steel + effective, fire + effective, electric + effective])
                 setresistances([bug + weak, grass + weak, ground + immune])
-            } else if(types[0] === 'dragon' || types[1] === 'dragon'){
+            } else if(types.type1 === 'dragon' || types.type2 === 'dragon'){
                 setWeaknesses([ice + superEffective, rock + effective, dragon + effective, fairy + effective])
                 setresistances([fighting + weak, bug + weak, fire + weak, water + weak, grass + superWeak, ground + immune])
             }
-        } else if(types[0] === 'ice' || types[1] === 'ice'){
-            if(types[0] === 'psychic' || types[1] === 'psychic'){
+        } else if(types.type1 === 'ice' || types.type2 === 'ice'){
+            if(types.type1 === 'psychic' || types.type2 === 'psychic'){
                 setWeaknesses([rock + effective, bug + effective, ghost + effective, steel + effective, fire + effective, dark + effective])
                 setresistances([psychic + weak, ice + weak])
             }
         }
     }
-    },[types])
+    },[extendedPokeInfo, types.type1, types.type2])
     
     {/* function for resetting scroll on moves tab */}
     const moveScroll = useRef<HTMLDivElement>(null)
@@ -331,60 +285,76 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
     if(moveScroll.current){
         moveScroll.current.scrollTop = 0
     }
-    },[moves])
+    },[extendedPokeInfo])
 
     {/* variables for abilities box on stats and abilities tab */}
-    const [abilityName, setAbilityName] = useState<Array<string>>([])
-    const [abilityDetails, setAbilityDetails] = useState<Array<string>>([]) 
 
-    const abilityBox1 = useRef<HTMLDivElement>(null)
-    const abilityBox2 = useRef<HTMLDivElement>(null)
-    const abilityBox3 = useRef<HTMLDivElement>(null)
+
+
 
     {/* function for grabbing abilities and setting abilities display */}
-    useEffect(()=>{
-        if(Abilities.length !== 0){
-            setAbilityName([])
-            setAbilityDetails([])
-            const detailFinder = async (index: number) => {
-                const abilityDetailsGrab = await fetch(Abilities[index].ability.url)
-                const abilityDetailsData = await abilityDetailsGrab.json()
-                for(let t = 0; t < abilityDetailsData.effect_entries.length; t++){
-                    if(abilityDetailsData.effect_entries[t].language.name === 'en'){
-                        setAbilityDetails(oldDetails =>{
-                            return [...oldDetails, abilityDetailsData.effect_entries[t].short_effect]
-                        })
-                    
-                    }
-                }
-            }
-            for(let i = 0; i < Abilities.length; i++){
-                setAbilityName(oldDetails =>{
-                    return [...oldDetails, Abilities[i].ability.name]
-                })
-                
-                detailFinder(i)
-                
-            }
-        }
-    },[Abilities])
-    useEffect(() => {
-        if(abilityName.length === 3 && abilityBox1.current && abilityBox2.current && abilityBox3.current){
-            abilityBox1.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'
-            abilityBox2.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'
-            abilityBox3.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'
-        }
-        if(abilityName.length === 2 && abilityBox1.current && abilityBox2.current && abilityBox3.current){
-            abilityBox1.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-blue-600 border-b-4'
-            abilityBox2.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-blue-600 border-b-4'
-            abilityBox3.current.className = 'hidden'
-        }
-        if(abilityName.length === 1 && abilityBox1.current && abilityBox2.current && abilityBox3.current){
-            abilityBox1.current.className = 'grid grid-rows-10 grid-cols-1 col-span-1 row-span-12 border-blue-600 border-b-4'
-            abilityBox2.current.className = 'hidden'
-            abilityBox3.current.className = 'hidden'
-        }
+
+    const hpBar = useRef<HTMLDivElement>(null)
+    const attackBar = useRef<HTMLDivElement>(null)
+    const defenseBar = useRef<HTMLDivElement>(null)
+    const specialAttackBar = useRef<HTMLDivElement>(null)
+    const specialDefenseBar = useRef<HTMLDivElement>(null)
+    const speedBar = useRef<HTMLDivElement>(null)
+
+    const [statMinMaxes, setStatMinMaxes] = useState<StatRange>({
+        hp: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        attack: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        defense: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        specialAttack: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        specialDefense: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        speed: {
+            minLvl50: 0,
+            maxLvl50: 0,
+            minLvl100: 0,
+            maxLvl100: 0
+        },
+        baseStatTotal: 0
     })
+
+    const statBarRatio = useRef<StatBarRatio>({
+        hp: 0,
+        attack: 0,
+        defense: 0,
+        specialAttack: 0,
+        specialDefense: 0,
+        speed: 0
+    })
+
+
+
+
+    useEffect(() => {
+
 
     {/* variables for stats in stats and abilities tab */}
     const minStatsLvl50: Array<number> = []
@@ -406,64 +376,127 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
     const pokeMinSpDefense: number = 20
     const pokeMinSpeed: number = 5 
 
-    const hpBar = useRef<HTMLDivElement>(null)
-    const attackBar = useRef<HTMLDivElement>(null)
-    const defenseBar = useRef<HTMLDivElement>(null)
-    const specialAttackBar = useRef<HTMLDivElement>(null)
-    const specialDefenseBar = useRef<HTMLDivElement>(null)
-    const speedBar = useRef<HTMLDivElement>(null)
+
 
     let baseStatTotal:number = 0
 
     {/* functions to set display for stats in extended stats */}
-    if(baseStats.length !== 0){
-    baseStatTotal = baseStats[0] + baseStats[1] + baseStats[2] + baseStats[3] + baseStats[4] + baseStats[5]
+    if(stats.hp !== 0){
+    baseStatTotal = stats.hp + stats.attack + stats.defense + stats.specialAttack + stats.specialDefense + stats.speed
     }
-    const hpRatio = (Number((baseStats[0] / (pokeMaxHp - pokeMinHp)).toFixed(2)) * 100)
-    const attackRatio = (Number((baseStats[1] / (pokeMaxAttack - pokeMinAttack)).toFixed(2)) * 100)
-    const defenseRatio = (Number((baseStats[2] / (pokeMaxDefense - pokeMinDefense)).toFixed(2)) * 100)
-    const spAttackRatio = (Number((baseStats[3] / (pokeMaxSpAttack - pokeMinSpAttack)).toFixed(2)) * 100)
-    const spDefenseRatio = (Number((baseStats[0] / (pokeMaxHpSpDefense - pokeMinSpDefense)).toFixed(2)) * 100)
-    const speedRatio = (Number((baseStats[0] / (pokeMaxSpeed - pokeMinSpeed)).toFixed(2)) * 100)
-    if(hpBar.current && attackBar.current && defenseBar.current && specialAttackBar.current && specialDefenseBar.current && speedBar.current && baseStats[0] !== undefined){
-        hpBar.current.style.width = `${hpRatio}%`
-        attackBar.current.style.width = `${attackRatio}%`
-        defenseBar.current.style.width = `${defenseRatio}%`
-        specialAttackBar.current.style.width = `${spAttackRatio}%`
-        specialDefenseBar.current.style.width = `${spDefenseRatio}%`
-        speedBar.current.style.width = `${speedRatio}%`
+    const hpRatio = (Number((stats.hp / (pokeMaxHp - pokeMinHp)).toFixed(2)) * 100)
+    const attackRatio = (Number((stats.attack / (pokeMaxAttack - pokeMinAttack)).toFixed(2)) * 100)
+    const defenseRatio = (Number((stats.defense / (pokeMaxDefense - pokeMinDefense)).toFixed(2)) * 100)
+    const spAttackRatio = (Number((stats.specialAttack / (pokeMaxSpAttack - pokeMinSpAttack)).toFixed(2)) * 100)
+    const spDefenseRatio = (Number((stats.hp / (pokeMaxHpSpDefense - pokeMinSpDefense)).toFixed(2)) * 100)
+    const speedRatio = (Number((stats.hp / (pokeMaxSpeed - pokeMinSpeed)).toFixed(2)) * 100)
+
+    statBarRatio.current = {
+        hp: hpRatio,
+        attack: attackRatio,
+        defense: defenseRatio,
+        specialAttack: spAttackRatio,
+        specialDefense: spDefenseRatio,
+        speed: speedRatio
     }
-    for(let i = 0; i < baseStats.length; i++){
-        if(i === 0){
-        const hpStatCalculatorMinLvl50 = Math.floor((((baseStats[i] * 2) * 50) / 100) + 50 + 10)
-        const hpStatCalculatorMaxLvl50 = Math.floor(((((baseStats[i] * 2) + 31 + (252/4)) * 50) / 100) + 50 + 10)
-        const hpStatCalculatorMinLvl100 = Math.floor((((baseStats[i] * 2) * 100) / 100) + 100 + 10)
-        const hpStatCalculatorMaxLvl00 = Math.floor(((((baseStats[i] * 2) + 31 + (252/4)) * 100) / 100) + 100 + 10)
-        minStatsLvl50.push(hpStatCalculatorMinLvl50)
-        maxStatsLvl50.push(hpStatCalculatorMaxLvl50)
-        minStatsLvl100.push(hpStatCalculatorMinLvl100)
-        maxStatsLvl100.push(hpStatCalculatorMaxLvl00)
-        } else {
-        const statCalculatorMinLvl50 = Math.floor(((((baseStats[i] * 2) * 50) / 100) + 5) - (((((baseStats[i] * 2) * 50) / 100) + 5) / 10))
-        const statCalculatorMaxLvl50 = Math.floor((((((baseStats[i] * 2) + 31 + (252/4)) * 50) / 100) + 5) + ((((((baseStats[i] * 2) + 31 + (252/4)) * 50) / 100) + 5) / 10))
-        const statCalculatorMinLvl100 = Math.floor(((((baseStats[i] * 2) * 100) / 100) + 5) - (((((baseStats[i] * 2) * 100) / 100) + 5) / 10))
-        const statCalculatorMaxLvl00 = Math.floor((((((baseStats[i] * 2) + 31 + (252/4)) * 100) / 100) + 5) + ((((((baseStats[i] * 2) + 31 + (252/4)) * 100) / 100) + 5) / 10))
-        minStatsLvl50.push(statCalculatorMinLvl50)
-        maxStatsLvl50.push(statCalculatorMaxLvl50)
-        minStatsLvl100.push(statCalculatorMinLvl100)
-        maxStatsLvl100.push(statCalculatorMaxLvl00)
+
+
+
+
+    for(const stat in stats){
+        if(stat === "hp"){
+            const hpStatCalculatorMinLvl50 = Math.floor((((stats[stat] * 2) * 50) / 100) + 50 + 10)
+            const hpStatCalculatorMaxLvl50 = Math.floor(((((stats[stat] * 2) + 31 + (252/4)) * 50) / 100) + 50 + 10)
+            const hpStatCalculatorMinLvl100 = Math.floor((((stats[stat] * 2) * 100) / 100) + 100 + 10)
+            const hpStatCalculatorMaxLvl00 = Math.floor(((((stats[stat] * 2) + 31 + (252/4)) * 100) / 100) + 100 + 10)
+            minStatsLvl50.push(hpStatCalculatorMinLvl50)
+            maxStatsLvl50.push(hpStatCalculatorMaxLvl50)
+            minStatsLvl100.push(hpStatCalculatorMinLvl100)
+            maxStatsLvl100.push(hpStatCalculatorMaxLvl00)
+        } else if(stat === "attack" || stat === "defense" || stat === "specialAttack" || stat === "specialDefense" || stat === "speed") {
+            const statCalculatorMinLvl50 = Math.floor(((((stats[stat] * 2) * 50) / 100) + 5) - (((((stats[stat] * 2) * 50) / 100) + 5) / 10))
+            const statCalculatorMaxLvl50 = Math.floor((((((stats[stat] * 2) + 31 + (252/4)) * 50) / 100) + 5) + ((((((stats[stat] * 2) + 31 + (252/4)) * 50) / 100) + 5) / 10))
+            const statCalculatorMinLvl100 = Math.floor(((((stats[stat] * 2) * 100) / 100) + 5) - (((((stats[stat] * 2) * 100) / 100) + 5) / 10))
+            const statCalculatorMaxLvl00 = Math.floor((((((stats[stat] * 2) + 31 + (252/4)) * 100) / 100) + 5) + ((((((stats[stat] * 2) + 31 + (252/4)) * 100) / 100) + 5) / 10))
+            minStatsLvl50.push(statCalculatorMinLvl50)
+            maxStatsLvl50.push(statCalculatorMaxLvl50)
+            minStatsLvl100.push(statCalculatorMinLvl100)
+            maxStatsLvl100.push(statCalculatorMaxLvl00)
         }
     }
+    setStatMinMaxes({
+        hp: {
+            minLvl50: minStatsLvl50[0],
+            maxLvl50: maxStatsLvl50[0],
+            minLvl100: minStatsLvl100[0],
+            maxLvl100: maxStatsLvl100[0]
+        },
+        attack: {
+            minLvl50: minStatsLvl50[1],
+            maxLvl50: maxStatsLvl50[1],
+            minLvl100: minStatsLvl100[1],
+            maxLvl100: maxStatsLvl100[1]
+        },
+        defense: {
+            minLvl50: minStatsLvl50[2],
+            maxLvl50: maxStatsLvl50[2],
+            minLvl100: minStatsLvl100[2],
+            maxLvl100: maxStatsLvl100[2]
+        },
+        specialAttack: {
+            minLvl50: minStatsLvl50[3],
+            maxLvl50: maxStatsLvl50[3],
+            minLvl100: minStatsLvl100[3],
+            maxLvl100: maxStatsLvl100[3]
+        },
+        specialDefense: {
+            minLvl50: minStatsLvl50[4],
+            maxLvl50: maxStatsLvl50[4],
+            minLvl100: minStatsLvl100[4],
+            maxLvl100: maxStatsLvl100[4]
+        },
+        speed: {
+            minLvl50: minStatsLvl50[5],
+            maxLvl50: maxStatsLvl50[5],
+            minLvl100: minStatsLvl100[5],
+            maxLvl100: maxStatsLvl100[5]
+        },
+        baseStatTotal: baseStatTotal
+    })
+    }, [extendedPokeInfo, stats])
+
+    useEffect(() => {
+        if(hpBar.current && attackBar.current && defenseBar.current && specialAttackBar.current && specialDefenseBar.current && speedBar.current && stats.hp !== 0){
+            hpBar.current.style.width = `${statBarRatio.current.hp}%`
+            attackBar.current.style.width = `${statBarRatio.current.attack}%`
+            defenseBar.current.style.width = `${statBarRatio.current.defense}%`
+            specialAttackBar.current.style.width = `${statBarRatio.current.specialAttack}%`
+            specialDefenseBar.current.style.width = `${statBarRatio.current.specialDefense}%`
+            speedBar.current.style.width = `${statBarRatio.current.speed}%`
+        }
+    }, [display, extendedPokeInfo, stats.hp])
+
+
+
+
+
+console.log("Hi from extended stats coponent");
+
+
+
     
     return (
         <div className="grid grid-cols-16 grid-rows-20 h-[94.25%] w-full ">
             <div className='grid grid-flow-col col-span-16 row-span-2 bg-gradient-to-r from-cyan-500 to-blue-600'>
-                    <div onClick={statsBoxGrab} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black  '>Stats and Abilities</div>
-                    <div onClick={moveBoxGrab} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black ' >Moves</div>
-                    <div onClick={typeEffectivenessBoxGrab} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black '>Type Effectiveness</div>
-                    <div onClick={variationsBoxGrab} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-black '>Variations & Evolutions</div>
+                    <div onClick={() => {changeExtendedDisplay('stats')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black  '>Stats and Abilities</div>
+                    <div onClick={() => {changeExtendedDisplay('moves')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black ' >Moves</div>
+                    <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black '>Type Effectiveness</div>
+                    <div onClick={() => {changeExtendedDisplay('variations')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-black '>Variations & Evolutions</div>
             </div>
-            <div ref={statsAndAbilitiesBox} className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+
+
+            {display === 'stats' ? (
+            <div  className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
                     <div className='grid grid-rows-11 grid-cols-16 border-2 border-blue-600 bg-blue-500 rounded-2xl w-8/12 h-3/4'>
                         <div className='grid justify-center items-center col-span-12 row-span-2 border-2 border-blue-600 rounded-tl-xl font-bold text-2xl'>Stats</div>
                             <div className='grid justify-center items-center col-span-4 row-span-1 border-2 border-blue-600 rounded-tr-xl font-bold text-xl'>Range</div>
@@ -471,61 +504,61 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                             <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold'>At lv. 100</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>HP:</div>
-                                <div className='me-2'>{baseStats[0]}</div>
+                                <div className='me-2'>{stats.hp}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={hpBar} className='w-full h-[90%] bg-red-600  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[0]}-{maxStatsLvl50[0]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[0]}-{maxStatsLvl100[0]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.hp.minLvl50}-{statMinMaxes.hp.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.hp.minLvl100}-{statMinMaxes.hp.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Attack:</div>
-                                <div className='me-2'>{baseStats[1]}</div>
+                                <div className='me-2'>{stats.attack}</div>
                             </div>
                             <div className='flex  justify-start items-center w-full h-full col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={attackBar} className='bg-orange-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[1]}-{maxStatsLvl50[1]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[1]}-{maxStatsLvl100[1]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.attack.minLvl50}-{statMinMaxes.attack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.attack.minLvl100}-{statMinMaxes.attack.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Defense:</div>
-                                <div className='me-2'>{baseStats[2]}</div>
+                                <div className='me-2'>{stats.defense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={defenseBar} className='bg-yellow-600 w-full h-[90%]  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[2]}-{maxStatsLvl50[2]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[2]}-{maxStatsLvl100[2]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.defense.minLvl50}-{statMinMaxes.defense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.defense.minLvl100}-{statMinMaxes.defense.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Sp. Atk:</div>
-                                <div className='me-2'>{baseStats[3]}</div>
+                                <div className='me-2'>{stats.specialAttack}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialAttackBar} className='bg-blue-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[3]}-{maxStatsLvl50[3]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[3]}-{maxStatsLvl100[3]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialAttack.minLvl50}-{statMinMaxes.specialAttack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialAttack.minLvl100}-{statMinMaxes.specialAttack.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Sp. Def:</div>
-                                <div className='me-2'>{baseStats[4]}</div>
+                                <div className='me-2'>{stats.specialDefense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialDefenseBar} className='bg-lime-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[4]}-{maxStatsLvl50[4]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[4]}-{maxStatsLvl100[4]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialDefense.minLvl50}-{statMinMaxes.specialDefense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialDefense.minLvl100}-{statMinMaxes.specialDefense.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Speed:</div>
-                                <div className='me-2'>{baseStats[5]}</div>
+                                <div className='me-2'>{stats.speed}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={speedBar} className='bg-purple-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl50[5]}-{maxStatsLvl50[5]}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{minStatsLvl100[5]}-{maxStatsLvl100[5]}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.speed.minLvl50}-{statMinMaxes.speed.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.speed.minLvl100}-{statMinMaxes.speed.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Total:</div>
-                                <div className='me-2'>{baseStatTotal}</div>    
+                                <div className='me-2'>{statMinMaxes.baseStatTotal}</div>    
                             </div> 
                             <div className='col-span-12 row-span-1 border-2 border-blue-600'></div>
                             <div className='grid grid-rows-2 col-span-16 row-span-2 border-2 border-blue-600 rounded-b-xl'>
@@ -535,58 +568,116 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                     </div>
                     <div className='grid grid-cols-1 grid-rows-14 w-1/4 h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                         <div className='grid col-span-1 row-span-2 border-blue-600 border-b-4 font-bold text-2xl justify-center items-center'>Abilities</div>
-                        <div ref={abilityBox1} className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'>
-                            <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
-                                <div className='ms-2'>Ability 1: {abilityName[0]}</div>
-                            </div>
-                            <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
-                                <div className='ms-2 me-2'>{abilityDetails[0]}</div>
-                            </div>
-                        </div> 
-                        <div ref={abilityBox2} className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-b-4 border-blue-600'>
-                            <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
-                                <div className='ms-2'>Ability 2: {abilityName[1]}</div>
-                            </div>
-                            <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
-                                <div className='ms-2 me-2'>{abilityDetails[1]}</div>
-                            </div>
-                        </div> 
-                        <div ref={abilityBox3} className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4'>
-                            <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
-                                <div className='ms-2'>Ability 3: {abilityName[2]}</div>
-                            </div>
-                            <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
-                                <div className='ms-2 me-2'>{abilityDetails[2]}</div>
-                            </div>
-                        </div> 
+                        
+                        {abilities.length === 3 ? (
+                            <>
+                                <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
+                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>
+                                    </div>
+                                </div> 
+                                <div className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-b-4 border-blue-600'>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
+                                        <div className='ms-2'>Ability 2: {abilities[1].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[1].abilityDetails}</div>
+                                    </div>
+                                </div> 
+                                <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4'>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
+                                        <div className='ms-2'>Ability 3: {abilities[2].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[2].abilityDetails}</div>
+                                    </div>
+                                </div> 
+                            </>
+                        ) : abilities.length === 2 ? (
+                            <>
+                                <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-blue-600 border-b-4'>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
+                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>
+                                    </div>
+                                </div> 
+                                <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-b-4 border-blue-600'>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
+                                        <div className='ms-2'>Ability 2: {abilities[1].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[1].abilityDetails}</div>
+                                    </div>
+                                </div> 
+                            </>
+                        ) : (
+                            <>
+                                <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-12 border-blue-600 border-b-4'>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
+                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    </div>
+                                    <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
+                                        <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
             </div>
-            <div ref={moveBox} className='hidden'>
+            ) : display === "moves" ? (
+            <div className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
                 <div ref={moveScroll} className='grid grid-rows-14 grid-cols-1 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">Moves</div>
                     <div className='ms-8 overflow-y-scroll row-span-12 col-span-1 max-h-[100%]  font-semibold text-3xl'>
-                        <MovesMap moves={moves} />
+                        {moves.map(move =>{
+                                return(
+                                    <div key={uuidv4()} className='flex justify-start pt-3 ps-1 border-b-4 border-s-4 border-blue-600'>
+                                        {move}
+                                    </div>
+                                )        
+                        })}
                     </div>
                 </div>
                 
             </div>
-            <div ref={typeEffectivenessBox} className='hidden'>
+            ) : display === "typeMatch" ? (
+            <div className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
                 <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Weaknesses</div>
                     <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
                         
-                        <WeaknessMap weaknesses={weaknesses} />
+                        {weaknesses.map(weakness=>{
+                            return(
+                                <div key={uuidv4()} className='flex justify-center bg-blue-400 border-4 border-blue-600 mt-3 text-2xl rounded-xl p-1'>
+                                    {weakness}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
                 <div className=' grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
                     <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Resistances</div>
                     <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
-                        <ResistanceMap resistances={resistances} />
+                        {resistances.map(resistance =>{
+                            return(
+                                <div key={uuidv4()} className='flex justify-center bg-blue-400 border-4 border-blue-600 mt-3 text-2xl rounded-xl p-1'>
+                                    {resistance}
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>
-            <div ref={variationBox} className='hidden'>
-                <div ref={regularEvolutionLine} className='hidden'>
+            ) : display === "variations" ? (  
+            <div className='flex flex-col justify-around bg-black bg-opacity-80 col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+
+                {secondEvolutions.length === 1 && thirdEvolutions.length === 1 ? (
+                <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
@@ -610,7 +701,9 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                         </div>
                     </div>
                 </div>
-                <div ref={twoSecondEvolutions} className=' hidden'>
+                ) : secondEvolutions.length === 2 ? (
+
+                <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
                         <div className='grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-4 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
                             <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
@@ -632,7 +725,8 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                         </div>
                     
                 </div>
-                <div ref={twoThirdEvolutions} className='hidden'>
+                ) : thirdEvolutions.length === 2 ? (
+                <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
                         <div className='z-20 grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-1 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
                             <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
@@ -657,7 +751,8 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                             <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
                         </div>
                 </div>
-                <div ref={eeveeEvolution} className='hidden'>
+                ) : secondEvolutions.length === 8 ? (
+                <div className='grid grid-rows-23 grid-cols-40 w-full h-full'>
                             <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-2 row-start-7 border-4 border-blue-600 bg-blue-500 rounded-2xl">
                                 <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
                                 <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
@@ -702,7 +797,8 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                             <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
                         </div>
                 </div>
-                <div ref={twoEvolutions} className='hidden'>
+                ) : thirdEvolutions.length === 0 && secondEvolutions.length === 1 ? (
+                <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
@@ -722,8 +818,8 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                         </div>
                     </div>
                 </div>
-
-                <div ref={oneEvolution} className='flex flex-col justify-around w-full h-full'>
+                ) : (
+                <div className='flex flex-col justify-around w-full h-full'>
                     <div className='flex justify-center w-full h-[45%]'>
                         <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
                             <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
@@ -737,8 +833,10 @@ function ExtendedPokeStats({baseStats, Abilities, moves, types, baseEvolution, b
                         </div>
                     </div>
                 </div>
+                )}
 
             </div>
+            ) : <></>}
         </div>
     )
 }
