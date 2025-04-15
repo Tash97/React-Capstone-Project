@@ -27,8 +27,10 @@ const Suggestions = (props: Props) => {
         setTimeout(async() => {
 
                     let result: number = 0;
-                    let filterNames = pokeNames;
-                    const search = e.target.value;
+                    let filterNames = pokeNames;                    
+                    const search = e.target.value.toLowerCase();
+                    
+                    
                     const results: Array<string> = [];
                     const picResults: Array<string> = [];
                     if(e.target.value !== ''){
@@ -69,7 +71,7 @@ const Suggestions = (props: Props) => {
                 const handleKeyPress = (event: KeyboardEvent) => {
                     if (event.key === "Enter" && pokedexInput3.current) {
                         setSuggestionsState([])
-                        search(pokedexInput3.current.value, suggestionsStateRef.current[0][0], rPanel, lPanel, pHolder);
+                        search(pokedexInput3.current.value.toLowerCase(), suggestionsStateRef.current[0][0], rPanel, lPanel, pHolder);
                         pokedexInput3.current.value = ''
         
                     }

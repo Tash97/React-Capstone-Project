@@ -335,6 +335,8 @@ function Body() {
 
             const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=750/`);
             const data = await response.json();
+            console.log(response);
+            
 
             for(let i = 0; i < data.results.length; i++){
                 namesArray.push(data.results[i].name)
