@@ -493,91 +493,101 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
 
     
     return (
-        <div className="grid grid-cols-16 grid-rows-20 h-[94.25%] w-full ">
-            <div className='grid grid-flow-col col-span-16 row-span-2 bg-gradient-to-r from-cyan-500 to-blue-600'>
-                    <div onClick={() => {changeExtendedDisplay('stats')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black  '>Stats and Abilities</div>
-                    <div onClick={() => {changeExtendedDisplay('moves')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black ' >Moves</div>
-                    <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-e-2 border-black '>Type Effectiveness</div>
-                    <div onClick={() => {changeExtendedDisplay('variations')}} className='grid justify-center items-end font-semibold text-2xl  border-b-2 border-black '>Variations & Evolutions</div>
+        <div className="flex flex-col h-[94.25%] md:max-h-[94.25%] max-h-fit w-full ">
+            <div className='flex w-full h-[10%] bg-gradient-to-r from-cyan-500 to-blue-600'>
+                    <div onClick={() => {changeExtendedDisplay('stats')}} className='  flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black  '>
+                        <div className=' w-1/2 flex justify-center items-end'>
+                            Stats and Abilities
+                        </div>
+                    </div>
+                    <div onClick={() => {changeExtendedDisplay('moves')}} className=' flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black ' >
+                        <div className=' w-1/2 h-[100%] flex justify-center items-end'>Moves</div>
+                    </div>
+                    <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black '>
+                        <div className=' w-1/2 flex justify-center items-end'>Type Effectiveness</div>
+                    </div>
+                    <div onClick={() => {changeExtendedDisplay('variations')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-black '>
+                        <div className=' w-3/4 flex justify-center text-[1em] items-end' >Variations & Evolutions</div>
+                    </div>
             </div>
 
 
             {display === 'stats' ? (
-            <div  className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div  className='flex md:flex-row md:min-h-[90%] sm:min-h-fit flex-col justify-around items-center gap-y-10 py-10 md:gap-y-0 md:py-0 bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
 
                 {loadingBool ? (<>Loading . . .</>) : (<>
 
-                    <div className='grid grid-rows-11 grid-cols-16 border-2 border-blue-600 bg-blue-500 rounded-2xl w-8/12 h-3/4'>
+                    <div className='grid grid-rows-11 grid-cols-16 border-2 border-blue-600 bg-blue-500 rounded-2xl md:w-8/12 w-[95%] h-1/2 md:h-3/4'>
                         <div className='grid justify-center items-center col-span-12 row-span-2 border-2 border-blue-600 rounded-tl-xl font-bold text-2xl'>Stats</div>
                             <div className='grid justify-center items-center col-span-4 row-span-1 border-2 border-blue-600 rounded-tr-xl font-bold text-xl'>Range</div>
-                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold'>At Lv. 50</div>
-                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold'>At lv. 100</div>
+                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold text-xs md:text-base'>At Lv. 50</div>
+                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold text-xs md:text-base'>At lv. 100</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>HP:</div>
+                                <div className='ms-2 text-base md:text-xl'>HP:</div>
                                 <div className='me-2'>{stats.hp}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={hpBar} className='w-full h-[90%] bg-red-600  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.hp.minLvl50}-{statMinMaxes.hp.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.hp.minLvl100}-{statMinMaxes.hp.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.hp.minLvl50}-{statMinMaxes.hp.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.hp.minLvl100}-{statMinMaxes.hp.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Attack:</div>
+                                <div className='ms-2 text-base md:text-xl'>Attack:</div>
                                 <div className='me-2'>{stats.attack}</div>
                             </div>
                             <div className='flex  justify-start items-center w-full h-full col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={attackBar} className='bg-orange-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.attack.minLvl50}-{statMinMaxes.attack.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.attack.minLvl100}-{statMinMaxes.attack.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.attack.minLvl50}-{statMinMaxes.attack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.attack.minLvl100}-{statMinMaxes.attack.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Defense:</div>
+                                <div className='ms-2 text-base md:text-xl'>Defense:</div>
                                 <div className='me-2'>{stats.defense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={defenseBar} className='bg-yellow-600 w-full h-[90%]  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.defense.minLvl50}-{statMinMaxes.defense.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.defense.minLvl100}-{statMinMaxes.defense.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.defense.minLvl50}-{statMinMaxes.defense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.defense.minLvl100}-{statMinMaxes.defense.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Sp. Atk:</div>
+                                <div className='ms-2 text-base md:text-xl'>Sp. Atk:</div>
                                 <div className='me-2'>{stats.specialAttack}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialAttackBar} className='bg-blue-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialAttack.minLvl50}-{statMinMaxes.specialAttack.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialAttack.minLvl100}-{statMinMaxes.specialAttack.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialAttack.minLvl50}-{statMinMaxes.specialAttack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialAttack.minLvl100}-{statMinMaxes.specialAttack.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Sp. Def:</div>
+                                <div className='ms-2 text-base md:text-xl'>Sp. Def:</div>
                                 <div className='me-2'>{stats.specialDefense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialDefenseBar} className='bg-lime-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialDefense.minLvl50}-{statMinMaxes.specialDefense.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.specialDefense.minLvl100}-{statMinMaxes.specialDefense.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialDefense.minLvl50}-{statMinMaxes.specialDefense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialDefense.minLvl100}-{statMinMaxes.specialDefense.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Speed:</div>
+                                <div className='ms-2 text-base md:text-xl'>Speed:</div>
                                 <div className='me-2'>{stats.speed}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={speedBar} className='bg-purple-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.speed.minLvl50}-{statMinMaxes.speed.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold'>{statMinMaxes.speed.minLvl100}-{statMinMaxes.speed.maxLvl100}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.speed.minLvl50}-{statMinMaxes.speed.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.speed.minLvl100}-{statMinMaxes.speed.maxLvl100}</div>
                             <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
                                 <div className='ms-2'>Total:</div>
                                 <div className='me-2'>{statMinMaxes.baseStatTotal}</div>    
                             </div> 
                             <div className='col-span-12 row-span-1 border-2 border-blue-600'></div>
                             <div className='grid grid-rows-2 col-span-16 row-span-2 border-2 border-blue-600 rounded-b-xl'>
-                                <div className="font-semibold leading-none">Minimum stats are calculated with 0 EVs, IVs of 0, and a hindering nature.</div>
-                                <div className="font-semibold leading-none">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
+                                <div className="font-semibold leading-none text-xs md:text-base">Minimum stats are calculated with 0 EVs, IVs of 0, and a hindering nature.</div>
+                                <div className="font-semibold leading-none text-xs md:text-base">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
                             </div>
                     </div>
 
-                    <div className='grid grid-cols-1 grid-rows-14 w-1/4 h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
+                    <div className='grid grid-cols-1 grid-rows-14 md:w-1/4 w-[95%] h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
                         <div className='grid col-span-1 row-span-2 border-blue-600 border-b-4 font-bold text-2xl justify-center items-center'>Abilities</div>
                         
                         {abilities.length === 3 ? (
@@ -642,12 +652,12 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                 </>)}
             </div>
             ) : display === "moves" ? (
-            <div className='flex justify-around items-start overflow-y-scroll bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div className='flex md:min-h-[90%] sm:min-h-fit justify-around items-start overflow-y-scroll bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
 
                 {loadingBool ? (<>Loading . . .</>) : (
 
                 <div ref={moveScroll} className='border-4 mt-10 border-blue-600 bg-blue-500 rounded-2xl w-10/12'>
-                    <div className="flex justify-between items-center font-bold text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">
+                    <div className="flex justify-between items-center font-semibold md:font-bold text-2xl md:text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">
                         <span className='w-1/4 h-full border-blue-600 border-e-4 flex justify-start ps-4' >Type</span>
                         <span className='w-[40%] h-full border-blue-600 border-e-4 flex justify-start ps-8 '>Name</span>
                         <span className='w-[10%] h-full border-blue-600 border-e-4 flex justify-center'>PP</span>
@@ -655,7 +665,7 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
 
 
                     </div>
-                    <div className=' font-semibold text-3xl'>
+                    <div className=' font-semibold text-lg md:text-3xl'>
                         {moves.map(move =>{
                                 return(
                                     <div key={uuidv4()} className='flex justify-between border-b-4 border-s-4= border-blue-600'>
@@ -687,12 +697,12 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                 )}
             </div>
             ) : display === "typeMatch" ? (
-            <div className='flex justify-around items-center bg-black bg-opacity-80 grid-flow-col col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div className='flex md:min-h-[90%] sm:min-h-fit justify-around items-center bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
                 
                 {loadingBool ? (<>Loading . . .</>) : (<>
                 
                 <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
-                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Weaknesses</div>
+                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 py-6 border-blue-600">Weaknesses</div>
                     <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
                         
                         {weaknesses.map(weakness=>{
@@ -705,7 +715,7 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                     </div>
                 </div>
                 <div className=' grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
-                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 border-blue-600">Resistances</div>
+                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 py-6 border-blue-600">Resistances</div>
                     <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
                         {resistances.map(resistance =>{
                             return(
@@ -719,130 +729,177 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                 </>)}
             </div>
             ) : display === "variations" ? (  
-            <div className='flex flex-col justify-around bg-black bg-opacity-80 col-span-16 row-span-18 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div className='flex flex-col md:min-h-[90%] sm:min-h-fit justify-around bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
 
                 
 
                 {secondEvolutions.length === 1 && thirdEvolutions.length === 1 && !loadingBool ? (
                 <div className='flex flex-col justify-around w-full h-full'>
-                    <div className='flex justify-center w-full h-[45%]'>
-                        <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
-                            <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                    <div className='flex justify-center w-full h-[45%] bg-red-500'>
+                        <div className=' border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4'>
+                            <div className='flex justify-center items-center border-b-4 border-blue-600'>{baseEvolution}</div>
+                            <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='aspect-square bg-no-repeat bg-cover'></div>
                         </div>
                         <div className='self-center'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                        <div className="grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions}</div>
-                            <div style={{backgroundImage: `url(${secondEvolutionPics})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                        <div className=" border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
+                            <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions}</div>
+                            <div style={{backgroundImage: `url(${secondEvolutionPics})`}} className='aspect-square bg-no-repeat bg-cover'></div>
                         </div>
                         <div className='self-center'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                        <div className="grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{thirdEvolutions}</div>
-                            <div style={{backgroundImage: `url(${thirdEvolutionPics})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                        <div className=" border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
+                            <div className='flex justify-center items-center border-b-4 border-blue-600'>{thirdEvolutions}</div>
+                            <div style={{backgroundImage: `url(${thirdEvolutionPics})`}} className='aspect-square bg-no-repeat bg-cover'></div>
                         </div>
                     </div>
                     <div className='flex justify-center w-full h-[45%]'>
-                        <div className="grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>Shiny {name}</div>
-                            <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                        <div className=" border-4 border-blue-600 bg-blue-500 rounded-2xl h-full w-1/4">
+                            <div className='flex justify-center items-center  border-b-4 border-blue-600'>Shiny {name}</div>
+                            <div style={{backgroundImage: `url(${shinyPictures})`}} className='aspect-square bg-no-repeat bg-cover'></div>
                         </div>
                     </div>
                 </div>
                 ) : secondEvolutions.length === 2 && !loadingBool ? (
 
-                <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
-                        <div className='grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-4 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
-                            <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                        </div>
-                        <div className='col-start-14 col-end-16 row-start-7'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                        <div className='col-start-14 col-end-16 row-start-13'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-16 row-start-4 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                                <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[0]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[0]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                <div  className='flex w-full h-full'>
+
+                        <div className='flex h-full w-[30%] bg-red-500 justify-center items-center' >
+                            <div className='aspect-square w-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl'>
+                                <div className='flex justify-center items-center border-b-4 border-blue-600'>{baseEvolution}</div>
+                                <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='aspect-square bg-no-repeat bg-cover'></div>
                             </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-16 row-start-11 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                                <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[1]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[1]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+
+
+                        </div>
+                        <div className='flex flex-col  h-full w-[10%] bg-yellow-500 justify-center items-center gap-[20%]'>
+                                <div className=''><i className="fa-solid fa-right-long text-5xl"></i></div>
+                                <div className=''><i className="fa-solid fa-right-long text-5xl"></i></div>
+                        </div>
+                        
+                            <div className='flex  flex-col h-full w-[30%] bg-green-500 justify-center items-center' >
+                                <div className="aspect-square w-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[0]}</div>
+                                    <div style={{backgroundImage: `url(${secondEvolutionPics[0]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                </div>
+                                <div className="aspect-square w-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[1]}</div>
+                                    <div style={{backgroundImage: `url(${secondEvolutionPics[1]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                </div>
                             </div>
                     
-                        <div className="grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-29 row-start-6 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>Shiny {name}</div>
-                            <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                        <div className='flex h-full w-[30%] bg-blue-500 justify-center items-center' >
+                            <div className=" aspect-square w-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                <div className='flex justify-center items-center border-b-4 border-blue-600'>Shiny {name}</div>
+                                <div style={{backgroundImage: `url(${shinyPictures})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                            </div>
                         </div>
                     
                 </div>
                 ) : thirdEvolutions.length === 2 && !loadingBool ? (
-                <div  className='grid grid-rows-22 grid-cols-40 w-full h-full'>
-                        <div className='z-20 grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-1 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
-                            <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                        </div>
-                        <div className='z-20 grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-12 row-start-6 col-span border-4 border-blue-600 bg-blue-500 rounded-2xl'>
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions}</div>
-                            <div style={{backgroundImage: `url(${secondEvolutionPics})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                        </div>
-                        <div className='col-start-10 col-end-12 row-start-10 z-10'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                        <div className='col-start-21 col-end-23 row-start-7 z-10'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                        <div className='col-start-21 col-end-23 row-start-13 z-10'><i className="fa-solid fa-right-long text-5xl"></i></div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-23 row-start-4 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                                <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{thirdEvolutions[0]}</div>
-                                <div style={{backgroundImage: `url(${thirdEvolutionPics[0]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                <div  className='flex flex-col w-full h-full'>
+                        <div className='flex w-full h-1/2 justify-center items-center '>
+                            <div className='flex items-center justify-center h-full w-[30%] '>
+                                <div className='aspect-square sm:w-[80%] md:h-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl'>
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>{baseEvolution}</div>
+                                    <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='aspect-square  bg-no-repeat bg-cover'></div>
+                                </div>
                             </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-23 row-start-11 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                                <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{thirdEvolutions[1]}</div>
-                                <div style={{backgroundImage: `url(${thirdEvolutionPics[1]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+
+                            <div className='flex items-center w-[5%] h-full '><i className="fa-solid fa-right-long text-xl md:text-5xl"></i></div>
+
+
+                            <div className='flex w-[30%] items-center justify-center h-full  '>
+                                <div className='aspect-square sm:w-[80%] md:h-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl'>
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions}</div>
+                                    <div style={{backgroundImage: `url(${secondEvolutionPics})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                </div>
                             </div>
-                        <div className="grid grid-cols-1 grid-rows-14 row-span-10 col-span-10 col-start-31 row-start-6 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>Shiny {name}</div>
-                            <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                            <div className='flex justify-center gap-[25%] flex-col w-[5%] h-full  '>
+                                <div className=' z-10'><i className="fa-solid fa-right-long text-xl md:text-5xl"></i></div>
+                                <div className=' z-10'><i className="fa-solid fa-right-long text-xl md:text-5xl"></i></div>
+                            </div>
+                                <div className='flex flex-col justify-start items-center w-[30%] h-full  ' >
+                                    <div className=" sm:w-[80%] md:w-[45%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{thirdEvolutions[0]}</div>
+                                        <div style={{backgroundImage: `url(${thirdEvolutionPics[0]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className=" sm:w-[80%] md:w-[45%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{thirdEvolutions[1]}</div>
+                                        <div style={{backgroundImage: `url(${thirdEvolutionPics[1]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className='flex justify-center items-center w-full h-1/2 '>
+                            <div className="aspect-square h-[80%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                <div className='flex justify-center items-center border-b-4 border-blue-600'>Shiny {name}</div>
+                                <div style={{backgroundImage: `url(${shinyPictures})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                            </div>
                         </div>
                 </div>
                 ) : secondEvolutions.length === 8 && !loadingBool ? (
-                <div className='grid grid-rows-23 grid-cols-40 w-full h-full'>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-2 row-start-7 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                                <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{baseEvolution}</div>
-                                <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+                <div className='flex w-full h-full'>
+                            <div className='flex flex-col gap-0 md:gap-[25%] justify-center items-center w-[20%] h-full  '>
+                                <div className="aspect-square h-[50%] md:h-[25%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>{baseEvolution}</div>
+                                    <div style={{backgroundImage: `url(${baseEvolutionPic})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                </div>
+                                <div className="aspect-square h-[50%] md:h-[25%] border-4 border-blue-600 bg-blue-500 rounded-2xl">
+                                    <div className='flex justify-center items-center border-b-4 border-blue-600'>Shiny {name}</div>
+                                    <div style={{backgroundImage: `url(${shinyPictures})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                </div>
                             </div>
 
-                            <div className='col-start-9 row-start-9'><i className="fa-solid fa-right-long text-7xl"></i></div>
 
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-18 row-start-4 border-4 border-blue-600 bg-blue-500 ">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[1]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[1]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
+
+
+                            <div className='w-[5%] h-full flex justify-center items-center '><i className="fa-solid fa-right-long text-xl md:text-7xl"></i></div>
+
+                            <div className='w-[75%] h-full flex flex-col justify-center  ' >
+                                <div className='flex w-full justify-center items-end h-1/2 '>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[1]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[1]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[2]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[2]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[3]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[3]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500  ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[7]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[7]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                </div>
+
+
+
+                                <div className='flex w-full justify-center items-end md:items-start h-1/2 '>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[4]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[4]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[5]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[5]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[6]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[6]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                    <div className="aspect-square sm:h-[100%] md:h-[50%] border-4 border-blue-600 bg-blue-500 ">
+                                        <div className='flex justify-center items-center border-b-4 border-blue-600'>{secondEvolutions[0]}</div>
+                                        <div style={{backgroundImage: `url(${secondEvolutionPics[0]})`}} className='aspect-square bg-no-repeat bg-cover'></div>
+                                    </div>
+                                </div>
+
+
+
+
+
                             </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-18 row-start-10 border-4 border-blue-600 bg-blue-500 ">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[2]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[2]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-24 row-start-4 border-4 border-blue-600 bg-blue-500 rounded-tr-2xl">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[3]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[3]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-24 row-start-10 border-4 border-blue-600 bg-blue-500 rounded-br-2xl">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[4]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[4]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-12 row-start-4 border-4 border-blue-600 bg-blue-500 rounded-tl-2xl">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[5]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[5]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-12 row-start-10 border-4 border-blue-600 bg-blue-500 rounded-bl-2xl">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[6]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[6]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-15 row-start-16 border-4 border-blue-600 bg-blue-500 rounded-bl-2xl ">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[7]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[7]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                            <div className="grid grid-cols-1 grid-rows-14 row-span-6 col-span-6 col-start-21 row-start-16 border-4 border-blue-600 bg-blue-500 rounded-br-2xl">
-                                <div className='flex justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>{secondEvolutions[0]}</div>
-                                <div style={{backgroundImage: `url(${secondEvolutionPics[0]})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                            </div>
-                        <div className="grid grid-cols-1 grid-rows-14 row-span-7 col-span-7 col-start-33 row-start-7 border-4 border-blue-600 bg-blue-500 rounded-2xl">
-                            <div className='grid justify-center items-center col-span-1 row-span-2 border-b-4 border-blue-600'>Shiny {name}</div>
-                            <div style={{backgroundImage: `url(${shinyPictures})`}} className='col-span-1 row-span-12 bg-no-repeat bg-cover'></div>
-                        </div>
+                        
                 </div>
                 ) : thirdEvolutions.length === 0 && secondEvolutions.length === 1 && !loadingBool ? (
                 <div className='flex flex-col justify-around w-full h-full'>

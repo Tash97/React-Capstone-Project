@@ -113,17 +113,17 @@ const Pokedex = (props: Props) => {
     
 
     return (
-        <div className='relative  flex w-[32.27rem] h-3/3'>
-            <div className="absolute left-[49.5%] top-[22%] z-50 h-[5%] w-[54.5%]">
-                <div className="-mb-1 w-10/12 h-[90%]" >
+        <div className=' grid grid-cols-1 frid w-[100%]   h-[100%]'>
+            <div className="relative left-[49.5%] m-0 p-0 row-start-1 col-start-1 top-[22%] z-50 h-[5%] w-[44.5%]">
+                <div className="-mb-1   h-[90%] w-full" >
                     <Suggestions search={search} pokeNames={pokeNames} rPanel={rightPanel.current} lPanel={leftPanel.current} pHolder={panelHolder.current} />
                 </div>            
             </div>
-            <div className="absolute z-20 w-[32.313rem] h-[100%]">
+            <div className="row-start-1 col-start-1 z-20 md:w-[32.313rem] w-full h-[100%]">
                 <div className='flex flex-col w-[97%] h-[98%] ms-2 mt-2 justify-end items-center'>   
                     <div className="flex w-full h-[75%] justify-center items-center">
 
-                        <div ref={display} className="flex flex-col border-2 border-black rounded w-[92.5%] h-[92.5%] bg-blue-500">
+                        <div ref={display} className="flex flex-col border-2 border-black rounded md:w-[92.5%] w-[85%] h-[92.5%] bg-blue-500">
 
                         {!loadingBool ? (
                             <>
@@ -165,7 +165,7 @@ const Pokedex = (props: Props) => {
                     </div>
                 </div>
             </div>
-            <svg className='absolute bg-purple-500' fill='rgb(237,30,36)' width='100%' viewBox="0 0 100 140" >
+            <svg className='row-start-1 col-start-1' fill='rgb(237,30,36)' width='100%' viewBox="0 0 100 140" >
                 <path className="" filter="url(#lights2)" strokeWidth='.5' stroke='black' d="M2,1 L98,1 Q99,1 99,2 L99,138 Q99,139 98,139 L2,139 Q1,139 1,138 L1,2 Q1,1 2,1" />     
                 <filter id="lights" filterUnits="userSpaceOnUse">
                     <feDiffuseLighting in="SourceGraphic" result="light" lightingColor="white">
@@ -215,7 +215,7 @@ const Pokedex = (props: Props) => {
                 <line filter='url(#lights3)'  x1="44" y1="8" x2="44" y2="8" strokeWidth="21" stroke="rgb(63,116,72)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
                 <path filter="url(#lights)" stroke='black' strokeWidth='.25' d='M1,33.125 L38.5,33.125 L46,27.75 L99,27.75 L46,27.75 L38.5,33.125 L1,33.125' />
             </svg>
-            <svg ref={panelHolder} className='absolute z-30' fill='rgb(237,30,36)'  height='100%' viewBox="0 0 100 140">
+            <svg ref={panelHolder} className='row-start-1 col-start-1  z-30' fill='rgb(237,30,36)'  width='100%' viewBox="0 0 100 140">
                 
                 <path ref={leftPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M5,40.5 Q5,39.5 6,39.5 L52.5,39.5 L52.5,83.375 L42.5,92.375 L42.5,135.25 L6,135.25 Q5,135.25 5,134 L5,40.25" />    
                 <path ref={rightPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M52.5,39.5 L94,39.5 Q95,39.5 95,40.25 L95,134.5 Q95,135.25 94,135.5 L42.5,135.25 L42.5,92.375 L52.5,83.375 L52.5,39.25" />      

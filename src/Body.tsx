@@ -284,16 +284,16 @@ function Body() {
 
         const rearrange = () => {
             if(extendedStats.current && refToGlidePokedex.current){
-                refToGlidePokedex.current.className = 'flex h-screen transition-transform duration-500 translate-x-[-95%]'
+                refToGlidePokedex.current.className = 'flex md:h-screen md:transition-transform md:duration-500 md:translate-x-[-95%]'
                 const timer = () => {
                     if(extendedStats.current && refToGlidePokedex.current){
-                        refToGlidePokedex.current.className = 'flex h-screen'
-                        extendedStats.current.className = 'invisible flex justify-start items-center w-[62.75%] h-full'
+                        refToGlidePokedex.current.className = 'flex md:h-screen'
+                        extendedStats.current.className = 'invisible flex justify-start items-center md:w-[62.75%] w-full h-screen'
                     }
                 }
                 const timer2 = () => {
                     if(extendedStats.current && refToGlidePokedexHolder.current){
-                        extendedStats.current.className = 'flex justify-start items-center w-[62.75%] h-full animate-fader bg-red-500'
+                        extendedStats.current.className = 'flex justify-start items-center md:w-[62.75%] w-full h-screen animate-fader'
                     }
                 }
                 setTimeout(timer, 500)
@@ -353,8 +353,8 @@ function Body() {
 
     return (
         <div>
-            <div ref={refToGlidePokedexHolder} className="flex justify-around w-full h-screen">
-                <div ref={refToGlidePokedex}  className="flex h-screen bg-green-500">
+            <div ref={refToGlidePokedexHolder} className="flex justify-around flex-col md:flex-row gap-10 md:gap-0 w-full min-h-screen">
+                <div ref={refToGlidePokedex}  className="flex w-full  md:w-fit bg-green-500">
                   <Pokedex pokeInformation={pokeInfo} search={search} pokeNames={allPokeNamesState} loadingBool={searchLoading} />
                 </div>
                 <div ref={extendedStats} className="hidden">
