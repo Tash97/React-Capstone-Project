@@ -353,8 +353,8 @@ function Body() {
 
     return (
         <div>
-            <div ref={refToGlidePokedexHolder} className="flex justify-around flex-col md:flex-row gap-10 md:gap-0 w-full min-h-screen">
-                <div ref={refToGlidePokedex}  className="flex w-full  md:w-fit bg-green-500">
+            <div ref={refToGlidePokedexHolder} className="flex justify-start md:justify-around mt-10 md:mt-0 flex-col md:flex-row gap-10 md:gap-0 w-full min-h-screen">
+                <div ref={refToGlidePokedex}  className="flex w-[100vw] aspect-[10 / 14] md:w-fit ">
                   <Pokedex pokeInformation={pokeInfo} search={search} pokeNames={allPokeNamesState} loadingBool={searchLoading} />
                 </div>
                 <div ref={extendedStats} className="hidden">

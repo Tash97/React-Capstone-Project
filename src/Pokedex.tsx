@@ -113,37 +113,37 @@ const Pokedex = (props: Props) => {
     
 
     return (
-        <div className=' grid grid-cols-1 frid w-[100%]   h-[100%]'>
+        <div className=' grid grid-cols-1  w-[100%]   h-[100%]'>
             <div className="relative left-[49.5%] m-0 p-0 row-start-1 col-start-1 top-[22%] z-50 h-[5%] w-[44.5%]">
                 <div className="-mb-1   h-[90%] w-full" >
                     <Suggestions search={search} pokeNames={pokeNames} rPanel={rightPanel.current} lPanel={leftPanel.current} pHolder={panelHolder.current} />
                 </div>            
             </div>
-            <div className="row-start-1 col-start-1 z-20 md:w-[32.313rem] w-full h-[100%]">
+            <div className="row-start-1 col-start-1 z-20 md:w-[32.313rem]  w-full">
                 <div className='flex flex-col w-[97%] h-[98%] ms-2 mt-2 justify-end items-center'>   
-                    <div className="flex w-full h-[75%] justify-center items-center">
+                    <div className="flex w-full h-[75%] justify-center  items-center">
 
-                        <div ref={display} className="flex flex-col border-2 border-black rounded md:w-[92.5%] w-[85%] h-[92.5%] bg-blue-500">
+                        <div ref={display} className="flex flex-col border-2 border-black rounded md:w-[92.5%] w-[85%] h-[92.5%] md:h-[92.5%] bg-blue-500">
 
                         {!loadingBool ? (
                             <>
                             <div className="flex w-full h-[60%] ">
-                                <div className="flex h-full w-1/2 justify-center items-center ">
-                                    <div style={{backgroundImage: `url(${photo})`}} className="w-full h-[80%] bg-no-repeat bg-cover"></div>
+                                <div className="flex w-1/2 justify-center items-center ">
+                                    <div style={{backgroundImage: `url(${photo})`}} className="w-full aspect-square  bg-no-repeat bg-cover"></div>
                                 </div>
                                 <div className="flex justify-center items-center h-full w-1/2">
-                                    <div ref={pokeData} className="flex flex-col justify-center text-start w-full h-full font-bold text-xl font-pokemon">
-                                        <div ref={pokeScreenName} className="text-[24px] mb-2">{name}</div>
-                                        <div ref={pokeInfo} className="flex flex-col justify-between text-lg h-[45%] mb-3">
-                                            <div>Type: {type1}</div>
-                                            <div ref={ addRef } className="hidden">Type 2: {type2}</div>
-                                            <div>Weight: {weight}</div>
-                                            <div>Height: {height}</div>
+                                    <div ref={pokeData} className="flex flex-col justify-start mt-[30%] md:mt-0 md:justify-center gap-2 md:gap-0 text-start w-full h-full font-bold text-lg md:text-xl font-pokemon">
+                                        <div ref={pokeScreenName} className="md:text-[24px] mb-2">{name}</div>
+                                        <div ref={pokeInfo} className="flex flex-col  justify-between md:text-lg h-[45%] mb-3">
+                                            <div className=" text-xs md:text-lg" >Type: {type1}</div>
+                                            <div className=" text-xs md:text-lg hidden" ref={ addRef } >Type 2: {type2}</div>
+                                            <div className=" text-xs md:text-lg" >Weight: {weight}</div>
+                                            <div className=" text-xs md:text-lg" >Height: {height}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div ref={displayEntry} className="flex w-full overflow-auto ps-5  pt-4 text-[24px] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl">            
+                            <div ref={displayEntry} className="flex w-full overflow-auto ps-5  pt-4 text-[20px] md:text-[24px] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl">            
                                 <div ref={overflow} className="no-scrollbar overflow-auto font-pokemon" >
                                     {entry}
                                 </div>
