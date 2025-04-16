@@ -110,15 +110,15 @@ const Pokedex = (props: Props) => {
     
 
     return (
-        <div className=' grid grid-cols-1 bg-green-500  w-[100%] '>
-            <div className="relative left-[49.5%] m-0 p-0 row-start-1 col-start-1 top-[22%] z-50 h-[5%] w-[44.5%]">
+        <div className=' grid grid-cols-1  w-[100%] '>
+            <div className="relative left-[49.5%] m-0 p-0 row-start-1 col-start-1 top-[24%] z-50 h-[5%] w-[44.5%]">
                 <div className="-mb-1   h-[90%] w-full" >
                     <Suggestions search={search} pokeNames={pokeNames} rPanel={rightPanel.current} lPanel={leftPanel.current} pHolder={panelHolder.current} />
                 </div>            
             </div>
                 <div className='flex z-20 row-start-1 col-start-1  w-[100%] h-[100%] justify-center items-end'>   
 
-                        <div ref={display} className="flex flex-col border-2 border-black mb-5  rounded w-[90%] h-[68%] overflow-hidden bg-blue-500">
+                        <div ref={display} className="flex flex-col border-2 border-black mb-5 rounded w-[90%] h-[64.10%] md:h-[66%]  bg-blue-500">
 
                         {!loadingBool ? (
                             <>
@@ -201,17 +201,17 @@ const Pokedex = (props: Props) => {
                         k3="0"
                         k4="0" />
                 </filter>      
-                <circle filter="url(#lights)"  cx="15" cy="16" r="10" fill="rgb(233,204,206)" />
-                <circle className="" filter="url(#lights)" cx="15" cy="16" r="9" fill="rgb(29,78,216)"  />
-                <circle filter='url(#lights3)' cx="32" cy="10.5"  r="2"  fill="rgb(193,40,46)" />
-                <circle filter='url(#lights3)' cx="38" cy="10.5" r="2" fill="rgb(251,223,19)" />
-                <circle filter='url(#lights3)'  cx="44" cy="10.5" r="2"  fill="rgb(63,116,72)"  />
+                <circle filter="url(#lights2)"  cx="15" cy="16" r="10" fill="rgb(233,204,206)" />
+                <circle className="" filter="url(#lights3)" cx="15" cy="16" r="9" fill="rgb(29,78,216)"  />
+                <circle filter='url(#lights2)' cx="32" cy="10.5"  r="2"  fill="rgb(193,40,46)" />
+                <circle filter='url(#lights2)' cx="38" cy="10.5" r="2" fill="rgb(251,223,19)" />
+                <circle filter='url(#lights2)'  cx="44" cy="10.5" r="2"  fill="rgb(63,116,72)"  />
                 <path filter="url(#lights)" stroke='black' strokeWidth='.25' d='M1,33.125 L38.5,33.125 L46,27.75 L99,27.75 L46,27.75 L38.5,33.125 L1,33.125' />
             </svg>
             <svg ref={panelHolder} className='row-start-1 col-start-1  z-30' fill='rgb(237,30,36)'  width='100%' viewBox="0 0 100 140">
                 
-                <path ref={leftPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M5,40.5 Q5,39.5 6,39.5 L52.5,39.5 L52.5,83.375 L42.5,92.375 L42.5,135.25 L6,135.25 Q5,135.25 5,134 L5,40.25" />    
-                <path ref={rightPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M52.5,39.5 L94,39.5 Q95,39.5 95,40.25 L95,134.5 Q95,135.25 94,135.5 L42.5,135.25 L42.5,92.375 L52.5,83.375 L52.5,39.25" />      
+                <path ref={leftPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M5,45.5 Q5,44.5 6,44.5 L52.5,44.5 L52.5,83.375 L42.5,92.375 L42.5,136.75 L6,136.75 Q5,136.75 5,135.75 L5,45.5" />    
+                <path ref={rightPanel} filter="url(#lights2)" stroke="black" strokeWidth='.25'  d="M52.5,44.5 L94,44.5 Q95,44.5 95,45.5 L95,135.75 Q95,136.75 94,136.75 L42.5,136.75 L42.5,92.375 L52.5,83.375 L52.5,44.5" />      
                 
             </svg>
             
