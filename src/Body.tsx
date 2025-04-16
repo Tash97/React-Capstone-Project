@@ -60,6 +60,7 @@ function Body() {
     const [allPokeNamesState, setAllPokeNamesState] = useState<Array<string>>([])
     const allPokeNames = useRef<Array<string>>([]);
     const [searchLoading, setSearchLoading] = useState<boolean>(false)
+    const pokedexInitialized = useRef<boolean>(false)
     const [pokeInfo, setPokeInfo] = useState<PokeInfo>({name: "", weight: "", height: "", type1: "", type2: "", photo: "", entry: ""})
     const [extendedPokeInfo, setExtendedPokeInfo] = useState<ExtendedPokeInfo>({
         stats: {
@@ -276,7 +277,10 @@ function Body() {
 
         setSearchLoading(false)
 
-        animation(rPanel, lPanel, pHolder);
+        if(!pokedexInitialized.current){
+            pokedexInitialized.current = true
+            animation(rPanel, lPanel, pHolder);
+        }
 
     }
 
@@ -288,12 +292,12 @@ function Body() {
                 const timer = () => {
                     if(extendedStats.current && refToGlidePokedex.current){
                         refToGlidePokedex.current.className = 'flex md:h-screen'
-                        extendedStats.current.className = 'invisible flex justify-start items-center md:w-[62.75%] w-full h-screen'
+                        extendedStats.current.className = 'invisible flex justify-start items-center md:w-[62.75%] w-full h-[100vh]'
                     }
                 }
                 const timer2 = () => {
                     if(extendedStats.current && refToGlidePokedexHolder.current){
-                        extendedStats.current.className = 'flex justify-start items-center md:w-[62.75%] w-full h-screen animate-fader'
+                        extendedStats.current.className = 'flex justify-start items-center md:w-[62.75%] w-full h-[100vh]  animate-fader'
                     }
                 }
                 setTimeout(timer, 500)

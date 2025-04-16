@@ -54,14 +54,14 @@ const Pokedex = (props: Props) => {
     useEffect(()=> {
 
     if(name.length > 9 && pokeScreenName.current){
-        pokeScreenName.current.className = 'text-[22px] mb-2'
+        pokeScreenName.current.className = 'text-[15px] md:text-[22px] mb-2'
     }
     if(addRef.current && pokeInfo.current){
         if(type2 !== ''){
             addRef.current.className = ''
         } else{
             addRef.current.className = 'hidden'
-            pokeInfo.current.className = 'flex flex-col justify-between text-lg h-[30%] mb-5'
+            pokeInfo.current.className = 'flex flex-col justify-between text-base md:text-lg h-[30%] mb-5'
         }
     } 
     }, [pokeInformation, name.length, type2])
