@@ -494,20 +494,20 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
     
     return (
         <div className="flex flex-col  h-[94.25%] md:max-h-[94.25%] w-full ">
-            <div className='flex w-full h-[10%]   text-[.8rem] md:text-[1.4rem] bg-gradient-to-r from-cyan-500 to-blue-600'>
+            <div className='flex w-full h-[10%] max-h-[10%] min-h-[10%]  text-[.9rem] md:text-[1.6rem] bg-gradient-to-r from-cyan-500 to-blue-600'>
                     <div onClick={() => {changeExtendedDisplay('stats')}} className='  flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black  '>
-                        <div className=' w-1/2 flex justify-center items-end font-bold md:font-semibold'>
+                        <div className=' w-1/2 flex justify-center items-center font-bold md:font-semibold'>
                             Stats and Abilities
                         </div>
                     </div>
                     <div onClick={() => {changeExtendedDisplay('moves')}} className=' flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black ' >
-                        <div className=' w-1/2 h-[100%] flex justify-center items-end font-bold md:font-semibold'>Moves</div>
+                        <div className=' w-1/2 h-[100%] flex justify-center items-end md:items-center font-bold md:font-semibold'>Moves</div>
                     </div>
                     <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black '>
-                        <div className=' w-1/2 flex justify-center items-end font-bold md:font-semibold'>Type Effectiveness</div>
+                        <div className=' w-1/2 flex justify-center items-center font-bold md:font-semibold'>Type Effectiveness</div>
                     </div>
                     <div onClick={() => {changeExtendedDisplay('variations')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-black '>
-                        <div className=' w-3/4 flex justify-center  items-end font-bold md:font-semibold' >Variations & Evolutions</div>
+                        <div className=' w-3/4 flex justify-center  items-center font-bold md:font-semibold' >Variations & Evolutions</div>
                     </div>
             </div>
 
@@ -656,8 +656,8 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
 
                 {loadingBool ? (<>Loading . . .</>) : (
 
-                <div ref={moveScroll} className='border-4 mt-10 border-blue-600 bg-blue-500 rounded-2xl w-10/12'>
-                    <div className="flex justify-between items-center font-semibold md:font-bold text-2xl md:text-3xl border-b-4 border-blue-600 row-span-2 col-span-1">
+                <div ref={moveScroll} className='border-4 text-[.75rem] md:text-[1.75rem] mt-10 border-blue-600 bg-blue-500 rounded-2xl w-11/12'>
+                    <div className="flex justify-between text-[.75rem] md:text-[1.75rem] items-center font-bold md:font-bold  border-b-4 border-blue-600">
                         <span className='w-1/4 h-full border-blue-600 border-e-4 flex justify-start ps-4' >Type</span>
                         <span className='w-[40%] h-full border-blue-600 border-e-4 flex justify-start ps-8 '>Name</span>
                         <span className='w-[10%] h-full border-blue-600 border-e-4 flex justify-center'>PP</span>
@@ -665,7 +665,7 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
 
 
                     </div>
-                    <div className=' font-semibold text-lg md:text-3xl'>
+                    <div className=' font-semibold md:font-normal'>
                         {moves.map(move =>{
                                 return(
                                     <div key={uuidv4()} className='flex justify-between border-b-4 border-s-4= border-blue-600'>
@@ -675,7 +675,7 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                                             </div>
                                         </span>
                                         <span className='w-[40%] h-full border-blue-600 border-e-4 flex justify-center'>
-                                            <div className='w-4/5' >
+                                            <div className='w-4/5 text-[.66rem] md:text-[1.75rem]' >
                                                 {move.name}
                                             </div>
                                         </span>
@@ -697,29 +697,29 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                 )}
             </div>
             ) : display === "typeMatch" ? (
-            <div className='flex md:min-h-[90%] sm:min-h-fit justify-around items-center bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div className='flex md:min-h-[90%] sm:min-h-fit w-full pb-4 justify-around items-start bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
                 
                 {loadingBool ? (<>Loading . . .</>) : (<>
                 
-                <div className='grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
-                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 py-6 border-blue-600">Weaknesses</div>
-                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
+                <div className='flex flex-col justify-start border-4 mt-4 md:mt-8 border-blue-600 bg-blue-500 rounded-2xl w-[45%]'>
+                    <div className="flex justify-center items-center h-[5vh] md:h-[9vh] w-[100%] font-semibold md:font-bold text-[1.2rem] md:text-[2rem]  border-b-4  border-blue-600">Weaknesses</div>
+                    <div className='flex flex-col justify-start gap-4 my-4 md:my-6 items-center '>
                         
                         {weaknesses.map(weakness=>{
                             return(
-                                <div key={uuidv4()} className='flex justify-center bg-blue-400 border-4 border-blue-600 mt-3 text-2xl rounded-xl p-1'>
+                                <div key={uuidv4()} className='flex w-[90%] h-[5vh] md:h-[9vh] justify-center items-center bg-blue-400 text-[.68rem] md:text-[1.5rem] font-semibold border-2 border-blue-600   rounded-xl'>
                                     {weakness}
                                 </div>
                             )
                         })}
                     </div>
                 </div>
-                <div className=' grid grid-cols-1 grid-rows-14 border-4 border-blue-600 bg-blue-500 rounded-2xl w-4/12 h-3/4'>
-                    <div className="grid justify-center items-center font-bold text-2xl col-span-1 row-span-2 border-b-4 py-6 border-blue-600">Resistances</div>
-                    <div className='grid justify-center items-start col-span-1 row-span-12 font-semibold text-xl overflow-y-auto'>
+                <div className=' flex flex-col justify-start border-4 mt-4 md:mt-8 border-blue-600 bg-blue-500 rounded-2xl w-[45%]'>
+                    <div className="flex justify-center items-center h-[5vh] md:h-[9vh] w-[100%] border-b-4 font-semibold md:font-bold text-[1.2rem] md:text-[2rem] border-blue-600">Resistances</div>
+                    <div className='flex flex-col justify-start gap-4 my-4 md:my-6 items-center  '>
                         {resistances.map(resistance =>{
                             return(
-                                <div key={uuidv4()} className='flex justify-center bg-blue-400 border-4 border-blue-600 mt-3 text-2xl rounded-xl p-1'>
+                                <div key={uuidv4()} className='flex w-[90%] h-[5vh] md:h-[9vh] justify-center items-center bg-blue-400 text-[.68rem] md:text-[1.5rem] font-semibold border-2 border-blue-600  rounded-xl '>
                                     {resistance}
                                 </div>
                             )

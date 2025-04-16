@@ -13,7 +13,7 @@ interface PokeInfo{
 
 interface Props{
     pokeInformation: PokeInfo
-    search: (name: string, suggestion: string, rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null) => void
+    search: (name: string, suggestion: string, rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null, pokedexInput3: HTMLInputElement | null, setSuggestionsState: React.Dispatch<React.SetStateAction<string[][]>>) => void
     pokeNames: Array<string>
     loadingBool: boolean
 }
@@ -54,7 +54,7 @@ const Pokedex = (props: Props) => {
     useEffect(()=> {
 
     if(name.length > 9 && pokeScreenName.current){
-        pokeScreenName.current.className = 'text-[.925rem] md:text-[1.35rem] mb-2'
+        pokeScreenName.current.className = 'text-[.84rem] md:text-[1.7rem] mb-3'
     }
     if(addRef.current && pokeInfo.current){
         if(type2 !== ''){
@@ -128,8 +128,8 @@ const Pokedex = (props: Props) => {
                                 </div>
                                 <div className="flex justify-center items-center h-full w-1/2">
                                     <div ref={pokeData} className="flex flex-col justify-start mt-[30%] md:mt-0 md:justify-center gap-2 md:gap-0 text-start w-full h-full font-bold font-pokemon">
-                                        <div ref={pokeScreenName} className=" text-[1.25rem] md:text-[1.5rem] mb-2">{name}</div>
-                                        <div ref={pokeInfo} className="flex flex-col  justify-between  text-[0.75rem] md:text-[1.125rem] h-[45%] mb-3">
+                                        <div ref={pokeScreenName} className=" text-[1.25rem] md:text-[2rem] mb-2">{name}</div>
+                                        <div ref={pokeInfo} className="flex flex-col  justify-between  text-[0.75rem] md:text-[1.5rem] h-[45%] mb-3">
                                             <div className="" >Type: {type1}</div>
                                             <div className="hidden" ref={ addRef } >Type 2: {type2}</div>
                                             <div className="" >Weight: {weight}</div>

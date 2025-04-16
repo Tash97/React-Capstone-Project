@@ -113,7 +113,7 @@ function Body() {
     const refToGlidePokedexHolder = useRef<HTMLDivElement>(null)
 
     {/* searches for pokemon via input */}
-    const search = async(input: string, suggestion: string = "NA", rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null) => {  
+    const search = async(input: string, suggestion: string = "NA", rPanel: SVGPathElement | null, lPanel: SVGPathElement | null, pHolder: SVGSVGElement | null, pokedexInput3: HTMLInputElement | null, setSuggestionsState: React.Dispatch<React.SetStateAction<string[][]>>) => {  
         {/* grabs data for pokedex and extended stats: stats & abilities, moves, and type effectiveness */}
         let index: number = -1
         let search:string = ''
@@ -130,6 +130,10 @@ function Body() {
 
             search = suggestion
             index = allPokeNames.current.indexOf(suggestion)
+        }
+        if(pokedexInput3){
+            pokedexInput3.value = ""
+            setSuggestionsState([])
         }
 
 
@@ -593,7 +597,7 @@ function Body() {
             
 
             for(let i = 0; i < data.results.length; i++){
-                namesArray.push(data.results[i])
+                namesArray.push(data.results[i].name)
                 namesAndIndexes.push([data.results[i].name, i])
 
             }
@@ -622,8 +626,7 @@ function Body() {
                 return [...tempArray]
             })
             allPokeNamesAndIndexes.current = allPokes
-            console.log(allPokeNamesAndIndexes.current);
-            console.log(allPokeNames.current);
+            
             
             
         }
