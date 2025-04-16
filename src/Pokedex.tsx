@@ -54,15 +54,12 @@ const Pokedex = (props: Props) => {
     useEffect(()=> {
 
     if(name.length > 9 && pokeScreenName.current){
-        pokeScreenName.current.className = 'text-[15px] md:text-[22px] mb-2'
+        pokeScreenName.current.className = 'text-[.925rem] md:text-[1.35rem] mb-2'
     }
     if(addRef.current && pokeInfo.current){
         if(type2 !== ''){
             addRef.current.className = ''
-        } else{
-            addRef.current.className = 'hidden'
-            pokeInfo.current.className = 'flex flex-col justify-between text-base md:text-lg h-[30%] mb-5'
-        }
+        } 
     } 
     }, [pokeInformation, name.length, type2])
 
@@ -113,17 +110,15 @@ const Pokedex = (props: Props) => {
     
 
     return (
-        <div className=' grid grid-cols-1  w-[100%]   h-[100%]'>
+        <div className=' grid grid-cols-1 bg-green-500  w-[100%] '>
             <div className="relative left-[49.5%] m-0 p-0 row-start-1 col-start-1 top-[22%] z-50 h-[5%] w-[44.5%]">
                 <div className="-mb-1   h-[90%] w-full" >
                     <Suggestions search={search} pokeNames={pokeNames} rPanel={rightPanel.current} lPanel={leftPanel.current} pHolder={panelHolder.current} />
                 </div>            
             </div>
-            <div className="row-start-1 col-start-1 z-20 md:w-[32.313rem]  w-full">
-                <div className='flex flex-col w-[97%] h-[98%] ms-2 mt-2 justify-end items-center'>   
-                    <div className="flex w-full h-[75%] justify-center  items-center">
+                <div className='flex z-20 row-start-1 col-start-1  w-[100%] h-[100%] justify-center items-end'>   
 
-                        <div ref={display} className="flex flex-col border-2 border-black rounded md:w-[92.5%] w-[85%] h-[92.5%] md:h-[92.5%] bg-blue-500">
+                        <div ref={display} className="flex flex-col border-2 border-black mb-5  rounded w-[90%] h-[68%] overflow-hidden bg-blue-500">
 
                         {!loadingBool ? (
                             <>
@@ -132,18 +127,18 @@ const Pokedex = (props: Props) => {
                                     <div style={{backgroundImage: `url(${photo})`}} className="w-full aspect-square  bg-no-repeat bg-cover"></div>
                                 </div>
                                 <div className="flex justify-center items-center h-full w-1/2">
-                                    <div ref={pokeData} className="flex flex-col justify-start mt-[30%] md:mt-0 md:justify-center gap-2 md:gap-0 text-start w-full h-full font-bold text-lg md:text-xl font-pokemon">
-                                        <div ref={pokeScreenName} className="md:text-[24px] mb-2">{name}</div>
-                                        <div ref={pokeInfo} className="flex flex-col  justify-between md:text-lg h-[45%] mb-3">
-                                            <div className=" text-xs md:text-lg" >Type: {type1}</div>
-                                            <div className=" text-xs md:text-lg hidden" ref={ addRef } >Type 2: {type2}</div>
-                                            <div className=" text-xs md:text-lg" >Weight: {weight}</div>
-                                            <div className=" text-xs md:text-lg" >Height: {height}</div>
+                                    <div ref={pokeData} className="flex flex-col justify-start mt-[30%] md:mt-0 md:justify-center gap-2 md:gap-0 text-start w-full h-full font-bold font-pokemon">
+                                        <div ref={pokeScreenName} className=" text-[1.25rem] md:text-[1.5rem] mb-2">{name}</div>
+                                        <div ref={pokeInfo} className="flex flex-col  justify-between  text-[0.75rem] md:text-[1.125rem] h-[45%] mb-3">
+                                            <div className="" >Type: {type1}</div>
+                                            <div className="hidden" ref={ addRef } >Type 2: {type2}</div>
+                                            <div className="" >Weight: {weight}</div>
+                                            <div className="" >Height: {height}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div ref={displayEntry} className="flex w-full overflow-auto ps-5  pt-4 text-[20px] md:text-[24px] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl">            
+                            <div ref={displayEntry} className="flex w-full overflow-auto ps-5  text-[1rem] md:text-[1.5rem] leading-[177%] h-[40%] bg-blue-600 rounded-t-xl">            
                                 <div ref={overflow} className="no-scrollbar overflow-auto font-pokemon" >
                                     {entry}
                                 </div>
@@ -162,9 +157,7 @@ const Pokedex = (props: Props) => {
                         </div>
 
 
-                    </div>
                 </div>
-            </div>
             <svg className='row-start-1 col-start-1' fill='rgb(237,30,36)' width='100%' viewBox="0 0 100 140" >
                 <path className="" filter="url(#lights2)" strokeWidth='.5' stroke='black' d="M2,1 L98,1 Q99,1 99,2 L99,138 Q99,139 98,139 L2,139 Q1,139 1,138 L1,2 Q1,1 2,1" />     
                 <filter id="lights" filterUnits="userSpaceOnUse">
@@ -208,11 +201,11 @@ const Pokedex = (props: Props) => {
                         k3="0"
                         k4="0" />
                 </filter>      
-                <line filter="url(#lights)"  x1="15" y1="13.5" x2="15" y2="13.5" strokeWidth="95" stroke="rgb(233,204,206)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                <line className="" filter="url(#lights)" x1="15" y1="13.5" x2="15" y2="13.5" strokeWidth="85" stroke="rgb(29,78,216)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                <line filter='url(#lights3)' x1="32" y1="8" x2="32" y2="8" strokeWidth="21" stroke="rgb(193,40,46)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                <line filter='url(#lights3)' x1="38" y1="8" x2="38" y2="8" strokeWidth="21" stroke="rgb(251,223,19)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-                <line filter='url(#lights3)'  x1="44" y1="8" x2="44" y2="8" strokeWidth="21" stroke="rgb(63,116,72)" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                <circle filter="url(#lights)"  cx="15" cy="16" r="10" fill="rgb(233,204,206)" />
+                <circle className="" filter="url(#lights)" cx="15" cy="16" r="9" fill="rgb(29,78,216)"  />
+                <circle filter='url(#lights3)' cx="32" cy="10.5"  r="2"  fill="rgb(193,40,46)" />
+                <circle filter='url(#lights3)' cx="38" cy="10.5" r="2" fill="rgb(251,223,19)" />
+                <circle filter='url(#lights3)'  cx="44" cy="10.5" r="2"  fill="rgb(63,116,72)"  />
                 <path filter="url(#lights)" stroke='black' strokeWidth='.25' d='M1,33.125 L38.5,33.125 L46,27.75 L99,27.75 L46,27.75 L38.5,33.125 L1,33.125' />
             </svg>
             <svg ref={panelHolder} className='row-start-1 col-start-1  z-30' fill='rgb(237,30,36)'  width='100%' viewBox="0 0 100 140">

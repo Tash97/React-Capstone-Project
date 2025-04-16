@@ -494,123 +494,123 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
     
     return (
         <div className="flex flex-col  h-[94.25%] md:max-h-[94.25%] w-full ">
-            <div className='flex w-full h-[10%] bg-gradient-to-r from-cyan-500 to-blue-600'>
-                    <div onClick={() => {changeExtendedDisplay('stats')}} className='  flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black  '>
-                        <div className=' w-1/2 flex justify-center items-end'>
+            <div className='flex w-full h-[10%]   text-[.8rem] md:text-[1.4rem] bg-gradient-to-r from-cyan-500 to-blue-600'>
+                    <div onClick={() => {changeExtendedDisplay('stats')}} className='  flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black  '>
+                        <div className=' w-1/2 flex justify-center items-end font-bold md:font-semibold'>
                             Stats and Abilities
                         </div>
                     </div>
-                    <div onClick={() => {changeExtendedDisplay('moves')}} className=' flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black ' >
-                        <div className=' w-1/2 h-[100%] flex justify-center items-end'>Moves</div>
+                    <div onClick={() => {changeExtendedDisplay('moves')}} className=' flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black ' >
+                        <div className=' w-1/2 h-[100%] flex justify-center items-end font-bold md:font-semibold'>Moves</div>
                     </div>
-                    <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-e-2 border-black '>
-                        <div className=' w-1/2 flex justify-center items-end'>Type Effectiveness</div>
+                    <div onClick={() => {changeExtendedDisplay('typeMatch')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-e-2 border-black '>
+                        <div className=' w-1/2 flex justify-center items-end font-bold md:font-semibold'>Type Effectiveness</div>
                     </div>
-                    <div onClick={() => {changeExtendedDisplay('variations')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold md:text-2xl  border-b-2 border-black '>
-                        <div className=' w-3/4 flex justify-center text-[1em] items-end' >Variations & Evolutions</div>
+                    <div onClick={() => {changeExtendedDisplay('variations')}} className='flex w-[25%] h-[100%] justify-center items-end font-semibold   border-b-2 border-black '>
+                        <div className=' w-3/4 flex justify-center  items-end font-bold md:font-semibold' >Variations & Evolutions</div>
                     </div>
             </div>
 
 
             {display === 'stats' ? (
-            <div  className='flex md:flex-row md:min-h-[90%] sm:min-h-fit flex-col justify-around items-center gap-y-10 py-10 md:gap-y-0 md:py-0 bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
+            <div  className='flex md:flex-row md:min-h-[90%] sm:min-h-fit flex-col justify-around items-center gap-y-10 py-10 md:gap-y-0 md:py-0 text-[0.625rem] md:text-[1rem] bg-black bg-opacity-80 border-t-2 border-b-4 border-s-4 border-e-4 rounded-b-2xl border-black'>
 
                 {loadingBool ? (<>Loading . . .</>) : (<>
 
                     <div className='grid grid-rows-11 grid-cols-16 border-2 border-blue-600 bg-blue-500 rounded-2xl md:w-8/12 w-[95%] h-1/2 md:h-3/4'>
-                        <div className='grid justify-center items-center col-span-12 row-span-2 border-2 border-blue-600 rounded-tl-xl font-bold text-2xl'>Stats</div>
-                            <div className='grid justify-center items-center col-span-4 row-span-1 border-2 border-blue-600 rounded-tr-xl font-bold text-xl'>Range</div>
-                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold text-xs md:text-base'>At Lv. 50</div>
-                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold text-xs md:text-base'>At lv. 100</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>HP:</div>
-                                <div className='me-2'>{stats.hp}</div>
+                        <div className='grid justify-center items-center col-span-12 row-span-2 border-2 border-blue-600 rounded-tl-xl md:text-[2rem] font-bold '>Stats</div>
+                            <div className='grid justify-center items-center col-span-4 row-span-1 border-2 border-blue-600 rounded-tr-xl font-bold '>Range</div>
+                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold '>At Lv. 50</div>
+                            <div className='grid justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-bold '>At lv. 100</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>HP:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.hp}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={hpBar} className='w-full h-[90%] bg-red-600  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.hp.minLvl50}-{statMinMaxes.hp.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.hp.minLvl100}-{statMinMaxes.hp.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>Attack:</div>
-                                <div className='me-2'>{stats.attack}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.hp.minLvl50}-{statMinMaxes.hp.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.hp.minLvl100}-{statMinMaxes.hp.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Attack:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.attack}</div>
                             </div>
                             <div className='flex  justify-start items-center w-full h-full col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={attackBar} className='bg-orange-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.attack.minLvl50}-{statMinMaxes.attack.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.attack.minLvl100}-{statMinMaxes.attack.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>Defense:</div>
-                                <div className='me-2'>{stats.defense}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.attack.minLvl50}-{statMinMaxes.attack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.attack.minLvl100}-{statMinMaxes.attack.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Defense:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.defense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={defenseBar} className='bg-yellow-600 w-full h-[90%]  rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.defense.minLvl50}-{statMinMaxes.defense.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.defense.minLvl100}-{statMinMaxes.defense.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>Sp. Atk:</div>
-                                <div className='me-2'>{stats.specialAttack}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.defense.minLvl50}-{statMinMaxes.defense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.defense.minLvl100}-{statMinMaxes.defense.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Sp. Atk:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.specialAttack}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialAttackBar} className='bg-blue-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialAttack.minLvl50}-{statMinMaxes.specialAttack.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialAttack.minLvl100}-{statMinMaxes.specialAttack.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>Sp. Def:</div>
-                                <div className='me-2'>{stats.specialDefense}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.specialAttack.minLvl50}-{statMinMaxes.specialAttack.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.specialAttack.minLvl100}-{statMinMaxes.specialAttack.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Sp. Def:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.specialDefense}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={specialDefenseBar} className='bg-lime-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialDefense.minLvl50}-{statMinMaxes.specialDefense.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.specialDefense.minLvl100}-{statMinMaxes.specialDefense.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2 text-base md:text-xl'>Speed:</div>
-                                <div className='me-2'>{stats.speed}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.specialDefense.minLvl50}-{statMinMaxes.specialDefense.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.specialDefense.minLvl100}-{statMinMaxes.specialDefense.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Speed:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{stats.speed}</div>
                             </div>
                             <div className='flex justify-start items-center col-span-8 row-span-1 border-2 border-blue-600'>
                                 <div ref={speedBar} className='bg-purple-600 w-full h-[90%] rounded-sm ms-0.5 '></div>
                             </div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.speed.minLvl50}-{statMinMaxes.speed.maxLvl50}</div>
-                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold text-sm md:text-base'>{statMinMaxes.speed.minLvl100}-{statMinMaxes.speed.maxLvl100}</div>
-                            <div className='flex font-bold text-xl justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
-                                <div className='ms-2'>Total:</div>
-                                <div className='me-2'>{statMinMaxes.baseStatTotal}</div>    
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.speed.minLvl50}-{statMinMaxes.speed.maxLvl50}</div>
+                            <div className='flex justify-center items-center col-span-2 row-span-1 border-2 border-blue-600 font-semibold md:text-[1.25rem] '>{statMinMaxes.speed.minLvl100}-{statMinMaxes.speed.maxLvl100}</div>
+                            <div className='flex font-bold  justify-between items-center col-span-4 row-span-1 border-2 border-blue-600'>
+                                <div className='ms-2 md:text-[1.5rem] '>Total:</div>
+                                <div className='me-2 md:text-[1.5rem] '>{statMinMaxes.baseStatTotal}</div>    
                             </div> 
                             <div className='col-span-12 row-span-1 border-2 border-blue-600'></div>
-                            <div className='grid grid-rows-2 col-span-16 row-span-2 border-2 border-blue-600 rounded-b-xl'>
-                                <div className="font-semibold leading-none text-xs md:text-base">Minimum stats are calculated with 0 EVs, IVs of 0, and a hindering nature.</div>
-                                <div className="font-semibold leading-none text-xs md:text-base">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
+                            <div className='flex flex-col justify-center md:gap-4 col-span-16 row-span-2 border-2 border-blue-600 rounded-b-xl'>
+                                <div className="font-semibold leading-none md:text-[1.15rem] ">Minimum stats are calculated with 0 EVs, IVs of 0, and a hindering nature.</div>
+                                <div className="font-semibold leading-none md:text-[1.15rem] ">Maximum stats are calculated with 252 EVs, IVs of 31, and a helpful nature.</div>
                             </div>
                     </div>
 
-                    <div className='grid grid-cols-1 grid-rows-14 md:w-1/4 w-[95%] h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
-                        <div className='grid col-span-1 row-span-2 border-blue-600 border-b-4 font-bold text-2xl justify-center items-center'>Abilities</div>
+                    <div className='grid grid-cols-1 grid-rows-14 md:w-1/4 md:text-[1.25rem] w-[95%] h-3/4 border-4 border-blue-600 bg-blue-500 rounded-2xl'>
+                        <div className='grid col-span-1 row-span-2 border-blue-600 border-b-4 font-bold  justify-center items-center md:text-[1.85rem]'>Abilities</div>
                         
                         {abilities.length === 3 ? (
                             <>
                                 <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-blue-600 border-b-4'>
-                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
-                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold '>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 1: {abilities[0].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>
                                     </div>
                                 </div> 
                                 <div className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4 border-b-4 border-blue-600'>
-                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
-                                        <div className='ms-2'>Ability 2: {abilities[1].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold  border-b-4 border-blue-600'>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 2: {abilities[1].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[1].abilityDetails}</div>
                                     </div>
                                 </div> 
                                 <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-4'>
-                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
-                                        <div className='ms-2'>Ability 3: {abilities[2].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold  border-b-4 border-blue-600'>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 3: {abilities[2].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[2].abilityDetails}</div>
@@ -620,16 +620,16 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                         ) : abilities.length === 2 ? (
                             <>
                                 <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-blue-600 border-b-4'>
-                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
-                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold '>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 1: {abilities[0].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>
                                     </div>
                                 </div> 
                                 <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-6 border-b-4 border-blue-600'>
-                                    <div className='grid items-center col-span-1 row-span-3 font-bold text-xl border-b-4 border-blue-600'>
-                                        <div className='ms-2'>Ability 2: {abilities[1].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 font-bold  border-b-4 border-blue-600'>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 2: {abilities[1].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[1].abilityDetails}</div>
@@ -639,8 +639,8 @@ function ExtendedPokeStats({extendedPokeInfo, loadingBool}: Props) {
                         ) : (
                             <>
                                 <div  className='grid grid-rows-10 grid-cols-1 col-span-1 row-span-12 border-blue-600 border-b-4'>
-                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold text-xl'>
-                                        <div className='ms-2'>Ability 1: {abilities[0].ability}</div>
+                                    <div className='grid items-center col-span-1 row-span-3 border-b-4 border-blue-600 font-bold '>
+                                        <div className='ms-2 md:text-[1.35rem] '>Ability 1: {abilities[0].ability}</div>
                                     </div>
                                     <div className='grid items-center col-span-1 row-span-7 font-semibold overflow-auto'>
                                         <div className='ms-2 me-2'>{abilities[0].abilityDetails}</div>

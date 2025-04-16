@@ -288,10 +288,10 @@ function Body() {
 
         const rearrange = () => {
             if(extendedStats.current && refToGlidePokedex.current){
-                refToGlidePokedex.current.className = 'flex md:h-screen md:transition-transform md:duration-500 md:translate-x-[-95%]'
+                refToGlidePokedex.current.className = 'flex md:transition-transform md:duration-500 md:translate-x-[-95%] w-[90vw] aspect-[10 / 14] md:w-[33%] h-fit'
                 const timer = () => {
                     if(extendedStats.current && refToGlidePokedex.current){
-                        refToGlidePokedex.current.className = 'flex md:h-screen'
+                        refToGlidePokedex.current.className = 'flex w-[90vw] aspect-[10 / 14] md:w-[33%] h-fit'
                         extendedStats.current.className = 'invisible flex justify-start items-center md:w-[62.75%] w-full h-[100vh]'
                     }
                 }
@@ -359,8 +359,8 @@ function Body() {
 
     return (
         <div>
-            <div ref={refToGlidePokedexHolder} className="flex justify-start md:justify-around mt-10 md:mt-0 flex-col md:flex-row gap-10 md:gap-0 w-full min-h-screen">
-                <div ref={refToGlidePokedex}  className="flex w-[100vw] aspect-[10 / 14] md:w-fit ">
+            <div ref={refToGlidePokedexHolder} className="flex items-center md:items-start justify-start md:justify-around mt-10 md:mt-0 flex-col md:flex-row gap-10 md:gap-0 w-full min-h-screen">
+                <div ref={refToGlidePokedex}  className="flex w-[90vw] aspect-[10 / 14] md:w-[33%] h-fit ">
                   <Pokedex pokeInformation={pokeInfo} search={search} pokeNames={allPokeNamesState} loadingBool={searchLoading} />
                 </div>
                 <div ref={extendedStats} className="hidden">

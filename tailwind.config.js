@@ -7,6 +7,8 @@ export default {
   ],
   
   theme: {
+
+    
     fontFamily: {
       pokemon: ["pokemon", "cursive"],
     },
@@ -82,6 +84,7 @@ export default {
       '24': 'repeat(24, minmax(0, 1fr))',
 
     },
+
     extend: {
       keyframes: {
         slide: {
